@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class AccommodationResource {
-	AccommodationService accommodationService = new AccommodationService();
+	private AccommodationService accommodationService = new AccommodationService();
 	
     /**
      * Method handling HTTP GET requests. 

@@ -13,6 +13,8 @@ import com.google.gson.Gson;
 @Path("/owners")
 @Produces(MediaType.APPLICATION_JSON)
 public class OwnerResource {
+	private OwnerService ownerService = new OwnerService();
+	private static final boolean LOGGING = true;
 	
     /**
      * GET all owners 
@@ -21,7 +23,6 @@ public class OwnerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getOwners() {
-    	OwnerService ownerService = new OwnerService();
     	List<Owner> owners = ownerService.getAllOwners();
 		Gson gson = new Gson();
         return gson.toJson(owners);
@@ -32,16 +33,27 @@ public class OwnerResource {
     @Path("/{ownerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getOwner(@PathParam("ownerId") int id) {
-    	OwnerService ownerService = new OwnerService();
     	Owner owner = ownerService.getOwner(id);
     	Gson gson = new Gson();
+    	if (owner == null) {
+    		return APIHelpers.getErrorJson(404, "No owner with ID " + id);
+    	}
     	return gson.toJson(owner);
     }
     
+    
+    /**
+     * POST an owner
+     * @param owner
+     * @return
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Owner addOwner(Owner owner) {
-    	return null; // TODO
+    	if (LOGGING) System.out.println("OwnerResource.java - addOwner - " + owner);
+    	
+//    	TODO error handling
+    	return ownerService.addOwner(owner);
     }
     
     

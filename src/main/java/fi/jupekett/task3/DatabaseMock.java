@@ -35,7 +35,6 @@ public class DatabaseMock {
 	
 	/**
 	 * Returns the singleton database instance.
-	 * Not robust! Only for demo purposes.
 	 * @return
 	 */
 	public static synchronized DatabaseMock getInstance() {
@@ -130,10 +129,10 @@ public class DatabaseMock {
 	 * @param owner
 	 * @return
 	 */
-	public List<Owner> addOwner(Owner owner) {
+	public Owner addOwner(Owner owner) {
 		Owner newOwner = new Owner(this.nextOwnerId++, owner.getName(), owner.getAccommodations());
 		this.owners.add(newOwner);
-		return this.owners;
+		return newOwner;
 	}
 	
 	

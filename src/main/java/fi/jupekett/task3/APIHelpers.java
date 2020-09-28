@@ -2,6 +2,8 @@ package fi.jupekett.task3;
 
 import java.util.Random;
 
+import com.google.gson.Gson;
+
 
 /**
  * Various helper functions.
@@ -84,6 +86,18 @@ public class APIHelpers {
 		String firstPart = RESORT_PREFIXES[rand.nextInt(RESORT_PREFIXES.length)];
 		String lastPart = RESORT_POSTFIXES[rand.nextInt(RESORT_POSTFIXES.length)];
 		return firstPart + " " + lastPart;
+	}
+	
+	
+	/**
+	 * Returns an error message as a JSON string.
+	 * @param status HTTP status code to be returned.
+	 * @param message Error message to be returned.
+	 * @return Error message as JSON.
+	 */
+	public static String getErrorJson(int status, String message) {
+		ErrorJson error = new ErrorJson(status, message);
+		return error.toString();
 	}
 
 }

@@ -39,5 +39,17 @@ public class OwnerService {
 		// TODO 404 response
 		return null;
 	}
+	
+	
+	/**
+	 * Adds an owner
+	 * @param owner
+	 * @return
+	 */
+	public Owner addOwner(Owner owner) {
+		Owner newOwner = database.addOwner(owner);
+		// TODO what about error?
+		return newOwner;
+	}
 
 }

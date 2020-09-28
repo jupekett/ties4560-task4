@@ -29,21 +29,21 @@ public class Accommodation {
 	}
 
 
-//	public void setId(int id) {
-//		// TODO id validation? Or leave it to the DB?
-//		this.id = id;
-//	}
-//	
+	public void setId(int id) {
+		// TODO id validation? Or leave it to the DB?
+		this.id = id;
+	}
+	
 
 	public String getName() {
 		return name;
 	}
 
 
-//	public void setName(String name) throws IllegalArgumentException{
+	public void setName(String name) throws IllegalArgumentException{
 //		if (name == null || name.isEmpty()) {
 //			throw new IllegalArgumentException("Cannot set empty name to an accommodation");
 //		}
-//		this.name = name;			
-//	}
+		this.name = name;			
+	}
 }
