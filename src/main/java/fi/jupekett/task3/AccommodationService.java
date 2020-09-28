@@ -8,7 +8,7 @@ import java.util.List;
  *
  */
 public class AccommodationService {
-	private AccommodationDB database = AccommodationDB.getInstance();
+	private DatabaseMock database = DatabaseMock.getInstance();
 	private List<Accommodation> ACCOMMODATIONS = database.getAllAccommodations();
 	
 	public AccommodationService() {

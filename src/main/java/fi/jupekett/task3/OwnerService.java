@@ -8,7 +8,7 @@ import java.util.List;
  *
  */
 public class OwnerService {
-	private AccommodationDB database = AccommodationDB.getInstance();
+	private DatabaseMock database = DatabaseMock.getInstance();
 	private List<Owner> OWNERS = database.getAllOwners();
 	
 	public OwnerService() {

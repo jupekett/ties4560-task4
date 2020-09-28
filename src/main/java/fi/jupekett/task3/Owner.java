@@ -41,19 +41,9 @@ public class Owner {
 		return id;
 	}
 
-//	public void setId(int id) {
-//		// TODO have DB handle this?
-//		this.id = id;
-//	}
-
 	public String getName() {
 		return name;
 	}
-
-//	public void setName(String name) {
-//		// TODO verification
-//		this.name = name;
-//	}
 
 	public List<Accommodation> getAccommodations() {
 		return accommodations;

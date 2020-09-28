@@ -12,8 +12,8 @@ import java.util.Set;
  * @author Juho Kettunen (jupekett)
  *
  */
-public class AccommodationDB {
-	private static AccommodationDB instance;
+public class DatabaseMock {
+	private static DatabaseMock instance;
 	private List<Owner> owners;
 	private int nextOwnerId;
 	
@@ -25,7 +25,7 @@ public class AccommodationDB {
 	 * Private constructor. 
 	 * To be called from the getInstance-function. 
 	 */
-	private AccommodationDB() {	
+	private DatabaseMock() {	
 		this.nextAccommodationId = 0;
 		this.accommodations = getInitialAccommodations(this);
 		this.nextOwnerId = 0;
@@ -38,9 +38,9 @@ public class AccommodationDB {
 	 * Not robust! Only for demo purposes.
 	 * @return
 	 */
-	public static synchronized AccommodationDB getInstance() {
+	public static synchronized DatabaseMock getInstance() {
 		if (instance == null) {
-			instance = new AccommodationDB();
+			instance = new DatabaseMock();
 		}
 		return instance;
 	}
@@ -51,7 +51,7 @@ public class AccommodationDB {
 	 * @param database
 	 * @return
 	 */
-	private List<Accommodation> getInitialAccommodations(AccommodationDB database) {
+	private List<Accommodation> getInitialAccommodations(DatabaseMock database) {
 		List<Accommodation> accommodations = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			int id = database.nextAccommodationId++;
@@ -67,7 +67,7 @@ public class AccommodationDB {
 	 * Initializes the list of owners.
 	 * @return
 	 */
-	private List<Owner> getInitialOwners(AccommodationDB database) {
+	private List<Owner> getInitialOwners(DatabaseMock database) {
 		List<Owner> owners = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
 			int id = database.nextOwnerId++;

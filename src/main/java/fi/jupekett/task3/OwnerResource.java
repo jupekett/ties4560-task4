@@ -38,6 +38,12 @@ public class OwnerResource {
     	return gson.toJson(owner);
     }
     
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Owner addOwner(Owner owner) {
+    	return null; // TODO
+    }
+    
     
     @Path("/{ownerId}/accommodations")
     public AccommodationResource getAccommodationResource() {
