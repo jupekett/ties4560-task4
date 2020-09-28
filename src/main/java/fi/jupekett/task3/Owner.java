@@ -38,6 +38,12 @@ public class Owner {
 		// TODO what to return? Owner, List or maybe boolean?
 	}
 	
+
+	@Override
+	public String toString() {
+		return "ID: " + this.id + ", name: " + this.name + ", accommodations: " + this.accommodations;
+	}
+	
 	
 	/* GETTERS AND SETTERS */
 
@@ -67,9 +73,4 @@ public class Owner {
 	}
 
 	
-	
-	@Override
-	public String toString() {
-		return "ID: " + this.id + ", name: " + this.name + ", accommodations: " + this.accommodations;
-	}
 }

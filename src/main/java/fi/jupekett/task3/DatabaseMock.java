@@ -127,12 +127,37 @@ public class DatabaseMock {
 	/**
 	 * Adds an owner to the "database"
 	 * @param owner
-	 * @return
+	 * @return The added owner.
 	 */
 	public Owner addOwner(Owner owner) {
-		Owner newOwner = new Owner(this.nextOwnerId++, owner.getName(), owner.getAccommodations());
+		Owner newOwner = new Owner(
+				this.nextOwnerId++, 
+				owner.getName(), 
+				owner.getAccommodations()
+				);
 		this.owners.add(newOwner);
 		return newOwner;
+	}
+	
+	
+	/**
+	 * Adds an accommodation to a certain owner in the "database"
+	 * @param ownerId
+	 * @param accommodation
+	 * @return The added accommodation.
+	 */
+	public Accommodation addAccommodation(int ownerId, Accommodation accommodation) {
+		for (Owner owner : this.owners) {
+			if (owner.getId() == ownerId) {
+				Accommodation newAccommodation = new Accommodation(
+						this.nextAccommodationId++, 
+						accommodation.getName()
+						);
+				owner.addAccommodation(newAccommodation);
+				return newAccommodation;
+			}
+		}
+		return null;
 	}
 	
 	

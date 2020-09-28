@@ -21,6 +21,12 @@ public class Accommodation {
 		this.name = name;
 	}
 	
+
+	@Override
+	public String toString() {
+		return "ID: " + this.getId() + ", name: " + this.getName();
+	}
+	
 	
 	/* GETTERS AND SETTERS */ 
 
@@ -40,10 +46,9 @@ public class Accommodation {
 	}
 
 
-	public void setName(String name) throws IllegalArgumentException{
-//		if (name == null || name.isEmpty()) {
-//			throw new IllegalArgumentException("Cannot set empty name to an accommodation");
-//		}
+	public void setName(String name){
 		this.name = name;			
 	}
+	
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response.Status;
 
 /**
  * Root resource (exposed at "owners/{ownerId}/accommodations" path)
@@ -12,6 +13,8 @@ import javax.ws.rs.core.*;
 @Produces(MediaType.APPLICATION_JSON)
 public class AccommodationResource {
 	private AccommodationService accommodationService = new AccommodationService();
+	private String URI_STRING = "http://localhost:8080/task3/webapi/owners/";
+	private static final boolean LOGGING = true;
 	
     /**
      * Get accommodations from an owner
@@ -41,6 +44,24 @@ public class AccommodationResource {
     {
     	Accommodation accommodation = accommodationService.getAccommodation(ownerId, accommodationId);
     	return accommodation;
+    }
+    
+    
+    /**
+     * POST an accommodation
+     * @param accommodation
+     * @return Resource location in response body
+     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addAccommodation(@PathParam("ownerId") int ownerId, Accommodation accommodation) {
+    	if (LOGGING) System.out.println("AccommodationResource.java - addAccommodation- " + accommodation);
+    	Accommodation newAccommodation = accommodationService.addAccommodation(ownerId, accommodation);
+    	String location = URI_STRING + ownerId + "/accommodations/" + newAccommodation.getId(); 
+    	return Response.status(Status.CREATED)
+    					.header("Content-Type", MediaType.TEXT_PLAIN)
+    					.entity(location)
+    					.build();
     }
     
 }

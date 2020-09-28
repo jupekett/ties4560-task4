@@ -62,5 +62,17 @@ public class AccommodationService {
 		// TODO 404 response
 		return null;
 	} 
+	
+	
+	/**
+	 * Adds a new accommodation to a certain owner.
+	 * @param ownerId
+	 * @param accommodation
+	 * @return The added accommodation.
+	 */
+	public Accommodation addAccommodation(int ownerId, Accommodation accommodation) {
+		Accommodation newAccommodation = database.addAccommodation(ownerId, accommodation);
+		return newAccommodation;
+	}
 
 }
