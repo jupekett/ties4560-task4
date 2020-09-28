@@ -48,16 +48,15 @@ public class AccommodationService {
 	 */
 	public Accommodation getAccommodation(int ownerId, int accommodationId) {
 		OwnerService ownerService = new OwnerService();
-		List<Owner> owners = ownerService.getAllOwners();
-		for (Owner owner : owners) {
-			if (owner.getId() == ownerId) {
-				var accommodations = owner.getAccommodations();
-				for (var accommodation : accommodations) {
-					if (accommodation.getId() == accommodationId) {
-						return accommodation;
-					}
-				}
-				break;
+		Owner owner = ownerService.getOwner(ownerId);
+		if (owner == null) {
+			// TODO error response
+			return null;
+		}
+		List<Accommodation> accommodations = owner.getAccommodations();
+		for (var accommodation : accommodations) {
+			if (accommodation.getId() == accommodationId) {
+				return accommodation;
 			}
 		}
 		// TODO 404 response

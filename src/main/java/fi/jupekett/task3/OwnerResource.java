@@ -15,12 +15,10 @@ import com.google.gson.Gson;
 public class OwnerResource {
 	
     /**
-     * Method handling HTTP GET requests. 
-     *
-     * @return String that will be returned.
+     * GET all owners 
+     * @return
      */
     @GET
-//    @Produces(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public String getOwners() {
     	OwnerService ownerService = new OwnerService();
@@ -39,6 +37,7 @@ public class OwnerResource {
     	Gson gson = new Gson();
     	return gson.toJson(owner);
     }
+    
     
     @Path("/{ownerId}/accommodations")
     public AccommodationResource getAccommodationResource() {
