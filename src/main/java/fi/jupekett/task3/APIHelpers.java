@@ -2,8 +2,6 @@ package fi.jupekett.task3;
 
 import java.util.Random;
 
-import com.google.gson.Gson;
-
 
 /**
  * Various helper functions.
