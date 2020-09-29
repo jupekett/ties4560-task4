@@ -142,7 +142,6 @@ public class DatabaseMock {
 	}
 	
 	
-	
 	/**
 	 * Initializes the list for customers with random data
 	 * @param count number of initial customers.
@@ -161,7 +160,6 @@ public class DatabaseMock {
 		}
 		return customers;
 	}
-	
 	
 	
 	/**
@@ -224,6 +222,38 @@ public class DatabaseMock {
 	
 	
 	/**
+	 * Returns a specific reservation, or null if not found.
+	 * @param id
+	 * @param reservations
+	 * @return
+	 */
+	public Reservation getReservation(int id, List<Reservation> reservations) {
+		for (Reservation res : reservations) {
+			if (res.getId() == id) {
+				return res;
+			}
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Returns a specific reservation, or null if not found.
+	 * @param id
+	 * @param accommodations
+	 * @return
+	 */
+	public Accommodation getAccommodation(int id, List<Accommodation> accommodations) {
+		for (Accommodation acc : accommodations) {
+			if (acc.getId() == id) {
+				return acc;
+			}
+		}
+		return null;
+	}
+	
+	
+	/**
 	 * Adds an owner to the "database"
 	 * @param owner
 	 * @return The added owner.
@@ -267,11 +297,29 @@ public class DatabaseMock {
 	 * @return The added customer.
 	 */
 	public Customer addCustomer(Customer customer) {
+		// Check user's reservations and add them to database if necessary.
+		List<Reservation> reservations = customer.getReservations();
+		List<Reservation> newReservations = new ArrayList<>();
+		
+		for (Reservation res : reservations) {
+			Reservation existingReservation = this.getReservation(res.getId(), this.reservations);
+			Reservation newReservation;
+			if (existingReservation == null) {
+				newReservation = new Reservation(this.nextReservationId++, res.getAccommodationId());
+				this.reservations.add(newReservation);
+			} else {
+				// NOTE: here the customer gets an existing reservation, if that ID exists.
+				// Might not make business sense.
+				newReservation = new Reservation(res.getId(), res.getAccommodationId()); 
+			}
+			newReservations.add(newReservation);
+		}
+		
 		Customer newCustomer = new Customer(
 				this.nextCustomerId++, 
 				customer.getName(), 
 				customer.getEmail(),
-				customer.getReservations()
+				newReservations
 				);
 		this.customers.add(newCustomer);
 		return newCustomer;
@@ -288,12 +336,17 @@ public class DatabaseMock {
 	public Reservation addReservation(int customerId, Reservation reservation) {
 		for (Customer customer : this.customers) {
 			if (customer.getId() == customerId) {
+				Accommodation accommodation = this.getAccommodation(reservation.getAccommodationId(), this.accommodations);
+				if (accommodation == null) {
+					// TODO refuse to add reservation, because of bad accommodationID
+				} else {
 				Reservation newReservation = new Reservation(
 						this.nextReservationId++,
 						reservation.getAccommodationId()
 						);
 				customer.addReservation(newReservation);
 				return newReservation;
+				}
 			}
 		}
 		// TODO response?

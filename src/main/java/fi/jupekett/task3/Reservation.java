@@ -56,7 +56,7 @@ public class Reservation {
 	/**
 	 * @param accommodationId the accommodationId to set
 	 */
-	public void setAccommodation(int accommodationId) {
+	public void setAccommodationId(int accommodationId) {
 		this.accommodationId = accommodationId;
 	}
 
