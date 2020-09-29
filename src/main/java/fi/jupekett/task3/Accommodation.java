@@ -1,5 +1,7 @@
 package fi.jupekett.task3;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class to represent an accommodation
@@ -9,6 +11,8 @@ package fi.jupekett.task3;
 public class Accommodation {
 	private int id;
 	private String name;
+	private List<Link> links = new ArrayList<>();
+	
 	
 	
 	public Accommodation() {
@@ -32,6 +36,19 @@ public class Accommodation {
 	}
 	
 	
+	/**
+	 * Creates a Link object to store url and rel.
+	 * @param url
+	 * @param rel
+	 */
+	public void addLink(String url, String rel) {
+		Link link = new Link();
+		link.setLink(url);
+		link.setRel(rel);
+		this.links.add(link);
+	}
+	
+	
 	/* GETTERS AND SETTERS */ 
 
 	public int getId() {
@@ -52,6 +69,20 @@ public class Accommodation {
 
 	public void setName(String name){
 		this.name = name;			
+	}
+
+	/**
+	 * @return the links
+	 */
+	public List<Link> getLinks() {
+		return links;
+	}
+
+	/**
+	 * @param links the links to set
+	 */
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 	
 	

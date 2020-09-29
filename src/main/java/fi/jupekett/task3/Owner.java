@@ -3,16 +3,20 @@ package fi.jupekett.task3;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  * A class to represent an accommodation owner
  * @author Juho Kettunen (jupekett)
  *
  */
+@XmlRootElement
 public class Owner {
 	private int id;
 	private String name;
 	private List<Accommodation> accommodations = new ArrayList<>();
+	private List<Link> links = new ArrayList<>();
 		
 	
 	public Owner() {
@@ -51,6 +55,19 @@ public class Owner {
 	}
 	
 	
+	/**
+	 * Creates a Link object to store url and rel.
+	 * @param url
+	 * @param rel
+	 */
+	public void addLink(String url, String rel) {
+		Link link = new Link();
+		link.setLink(url);
+		link.setRel(rel);
+		this.links.add(link);
+	}
+	
+	
 	/* GETTERS AND SETTERS */
 
 	public int getId() {
@@ -76,6 +93,22 @@ public class Owner {
 	public void setAccommodations(List<Accommodation> accommodations) {
 		// TODO verification
 		this.accommodations = accommodations;
+	}
+
+
+	/**
+	 * @return the links
+	 */
+	public List<Link> getLinks() {
+		return links;
+	}
+
+
+	/**
+	 * @param links the links to set
+	 */
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 
 	

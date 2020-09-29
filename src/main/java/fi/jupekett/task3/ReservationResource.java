@@ -1,5 +1,6 @@
 package fi.jupekett.task3;
 
+import java.net.URI;
 import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -58,17 +59,26 @@ public class ReservationResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addReservation(
     		@PathParam("customerId") int customerId, 
-    		Reservation reservation) 
+    		Reservation reservation,
+    		@Context UriInfo uriInfo)
     {
     	if (LOGGING) System.out.println("ReservationResource.java - addReservation- " + reservation);
     	Reservation newReservation = reservationService.addReservation(customerId, reservation);
     	if (newReservation == null) {
     		// TODO reservation was faulty (wrong accommodation ID?) -> throw error
     	}
-    	String location = URI_STRING + customerId + "/reservations/" + newReservation.getId(); 
-    	return Response.status(Status.CREATED)
-    					.header("Content-Type", MediaType.TEXT_PLAIN)
-    					.entity(location)
+    	String linkUri = uriInfo.getBaseUriBuilder()
+    						.path(ReservationResource.class)
+    						.resolveTemplate("customerId", customerId)
+    						.path(Integer.toString(newReservation.getId()))
+    						.build()
+    						.toString();
+    	newReservation.addLink(linkUri, "self");
+    	
+    	String newId = String.valueOf(newReservation.getId());
+    	URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+    	return Response.created(uri)
+    					.entity(newReservation)
     					.build();
     }
     

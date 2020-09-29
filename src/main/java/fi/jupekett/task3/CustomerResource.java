@@ -1,5 +1,6 @@
 package fi.jupekett.task3;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.*;
@@ -50,13 +51,28 @@ public class CustomerResource {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addCustomer(Customer customer) {
+	public Response addCustomer(Customer customer, @Context UriInfo uriInfo) {
 		if (LOGGING) System.out.println("CustomerResource.java - addcustomer - " + customer);
 		Customer newCustomer = customerService.addCustomer(customer);
-		String location = URI_STRING + newCustomer.getId();
-		return Response.status(Status.CREATED)
-					   .header("Content-Type", MediaType.TEXT_PLAIN)
-					   .entity(location)
+		
+		String selfUri = uriInfo.getBaseUriBuilder()
+						.path(CustomerResource.class)
+						.path(Integer.toString(newCustomer.getId()))
+						.build()
+						.toString();
+		newCustomer.addLink(selfUri, "self");
+		
+		String resUri = uriInfo.getBaseUriBuilder()
+							.path(ReservationResource.class)
+							.resolveTemplate("customerId", newCustomer.getId())
+							.build()
+							.toString();
+		newCustomer.addLink(resUri, "reservations");
+		
+		String newId = String.valueOf(newCustomer.getId());
+		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+		return Response.created(uri)
+					   .entity(newCustomer)
 					   .build();
 	}
 	

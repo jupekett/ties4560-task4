@@ -3,16 +3,20 @@ package fi.jupekett.task3;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * A class to represent a customer
  * @author Juho Kettunen (jupekett)
  *
  */
+@XmlRootElement
 public class Customer {
 	private int id;
 	private String name;
 	private String email;
 	private List<Reservation> reservations = new ArrayList<>();
+	private List<Link> links = new ArrayList<>();
 	
 	
 	public Customer() {
@@ -43,6 +47,19 @@ public class Customer {
 	
 	public void addReservation(Reservation reservation) {
 		this.reservations.add(reservation);
+	}
+	
+	
+	/**
+	 * Creates a Link object to store url and rel.
+	 * @param url
+	 * @param rel
+	 */
+	public void addLink(String url, String rel) {
+		Link link = new Link();
+		link.setLink(url);
+		link.setRel(rel);
+		this.links.add(link);
 	}
 	
 	
@@ -114,6 +131,22 @@ public class Customer {
 	 */
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+
+
+	/**
+	 * @return the links
+	 */
+	public List<Link> getLinks() {
+		return links;
+	}
+
+
+	/**
+	 * @param links the links to set
+	 */
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 	
 

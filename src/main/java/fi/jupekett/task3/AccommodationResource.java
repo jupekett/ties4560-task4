@@ -1,5 +1,6 @@
 package fi.jupekett.task3;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.*;
@@ -55,13 +56,21 @@ public class AccommodationResource {
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addAccommodation(@PathParam("ownerId") int ownerId, Accommodation accommodation) {
+    public Response addAccommodation(@PathParam("ownerId") int ownerId, Accommodation accommodation, @Context UriInfo uriInfo) {
     	if (LOGGING) System.out.println("AccommodationResource.java - addAccommodation- " + accommodation);
     	Accommodation newAccommodation = accommodationService.addAccommodation(ownerId, accommodation);
-    	String location = URI_STRING + ownerId + "/accommodations/" + newAccommodation.getId(); 
-    	return Response.status(Status.CREATED)
-    					.header("Content-Type", MediaType.TEXT_PLAIN)
-    					.entity(location)
+    	String linkUri = uriInfo.getBaseUriBuilder()
+    						.path(AccommodationResource.class)
+    						.resolveTemplate("ownerId", ownerId)
+    						.path(Integer.toString(newAccommodation.getId()))
+    						.build()
+    						.toString();
+    	newAccommodation.addLink(linkUri, "self");
+    	
+    	String newId = String.valueOf(newAccommodation.getId());
+    	URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+    	return Response.created(uri)
+    					.entity(newAccommodation)
     					.build();
     }
     

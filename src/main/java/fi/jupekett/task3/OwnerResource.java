@@ -1,5 +1,6 @@
 package fi.jupekett.task3;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.*;
@@ -53,13 +54,28 @@ public class OwnerResource {
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addOwner(Owner owner) {
-    	if (LOGGING) System.out.println("OwnerResource.java - addOwner - " + owner);
+    public Response addOwner(Owner owner, @Context UriInfo uriInfo) {
+    	if (LOGGING) System.out.println("OwnerResource.java - addOwner - "+owner);
+    	
     	Owner newOwner = ownerService.addOwner(owner);
-    	String location = URI_STRING + newOwner.getId(); 
-    	return Response.status(Status.CREATED)
-    					.header("Content-Type", MediaType.TEXT_PLAIN)
-    					.entity(location)
+    	String selfUri = uriInfo.getBaseUriBuilder()
+    					.path(OwnerResource.class)
+    					.path(Integer.toString(newOwner.getId()))
+    					.build()
+    					.toString();
+    	newOwner.addLink(selfUri,  "self");
+    	
+    	String accommUri = uriInfo.getBaseUriBuilder()
+    						.path(AccommodationResource.class)
+    						.resolveTemplate("ownerId", newOwner.getId())
+    						.build()
+    						.toString();
+		newOwner.addLink(accommUri, "accommodations");
+    	
+    	String newId = String.valueOf(newOwner.getId());
+    	URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+    	return Response.created(uri)
+    					.entity(newOwner)
     					.build();
     }
     
