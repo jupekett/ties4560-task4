@@ -15,7 +15,6 @@ import javax.ws.rs.core.Response.Status;
 @Produces(MediaType.APPLICATION_JSON)
 public class ReservationResource {
 	private ReservationService reservationService = new ReservationService();
-	private String URI_STRING = "http://localhost:8080/task3/webapi/customers/";
 	private static final boolean LOGGING = true;
 	
 	
@@ -65,7 +64,7 @@ public class ReservationResource {
     	if (LOGGING) System.out.println("ReservationResource.java - addReservation- " + reservation);
     	Reservation newReservation = reservationService.addReservation(customerId, reservation);
     	if (newReservation == null) {
-    		// TODO reservation was faulty (wrong accommodation ID?) -> throw error
+    		// TODO
     	}
     	String linkUri = uriInfo.getBaseUriBuilder()
     						.path(ReservationResource.class)

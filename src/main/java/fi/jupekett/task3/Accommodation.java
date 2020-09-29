@@ -57,7 +57,6 @@ public class Accommodation {
 
 
 	public void setId(int id) {
-		// TODO id validation? Or leave it to the DB?
 		this.id = id;
 	}
 	

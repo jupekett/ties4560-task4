@@ -233,7 +233,7 @@ public class DatabaseMock {
 				return res;
 			}
 		}
-		return null;
+		return null; // addCustomer depends on getting null here
 	}
 	
 	
@@ -249,7 +249,7 @@ public class DatabaseMock {
 				return acc;
 			}
 		}
-		return null;
+		throw new DataNotFoundException("Accommodation with ID "+id+" not found.");
 	}
 	
 	
@@ -286,8 +286,7 @@ public class DatabaseMock {
 				return newAccommodation;
 			}
 		}
-		// TODO response?
-		return null;
+		throw new DataNotFoundException("Owner with ID "+ownerId+" not found.");
 	}
 	
 	
@@ -297,10 +296,10 @@ public class DatabaseMock {
 	 * @return The added customer.
 	 */
 	public Customer addCustomer(Customer customer) {
-		// Check user's reservations and add them to database if necessary.
 		List<Reservation> reservations = customer.getReservations();
 		List<Reservation> newReservations = new ArrayList<>();
 		
+		// Check user's reservations and add them to database if necessary.
 		for (Reservation res : reservations) {
 			Reservation existingReservation = this.getReservation(res.getId(), this.reservations);
 			Reservation newReservation;
@@ -335,9 +334,10 @@ public class DatabaseMock {
 	public Reservation addReservation(int customerId, Reservation reservation) {
 		for (Customer customer : this.customers) {
 			if (customer.getId() == customerId) {
-				Accommodation accommodation = this.getAccommodation(reservation.getAccommodationId(), this.accommodations);
+				int accomId = reservation.getAccommodationId();
+				Accommodation accommodation = this.getAccommodation(accomId, this.accommodations);
 				if (accommodation == null) {
-					// TODO refuse to add reservation, because of bad accommodationID
+					throw new DataNotFoundException("Accommodation with ID "+accomId+" not found.");
 				} else {
 				Reservation newReservation = new Reservation(
 						this.nextReservationId++,
@@ -348,8 +348,7 @@ public class DatabaseMock {
 				}
 			}
 		}
-		// TODO response?
-		return null;
+		throw new DataNotFoundException("Customer with ID "+customerId+" not found.");
 	}
 	
 	
@@ -379,7 +378,8 @@ public class DatabaseMock {
 		}
 		// No customer with given array.
 		if (customer.getName() == null) {
-			// TODO throw error, because you can't new customer without name.
+			// TODO too harsh?
+			throw new RuntimeException("Cannot add an owner without a name.");
 		}
 		Customer newCustomer = new Customer(
 				customerId, 
@@ -407,16 +407,18 @@ public class DatabaseMock {
 					Reservation pointedReservation = reservations.get(j);
 					if (pointedReservation.getId() == reservationId) {
 						reservations.remove(j);
-						Reservation deletedReservation = deleteFromReservations(reservationId, this.reservations);
-						return deletedReservation;
+						//Reservation deletedReservation = deleteFromReservations(reservationId, this.reservations);
+						//return deletedReservation;
+						return pointedReservation;
 					}
 				}
-				// TODO custom error?
-				return null; // no reservation found on customer.
+				throw new DataNotFoundException(
+						"Reservation with customer ID "+customerId+
+						" and reservation ID "+reservationId+" not found.");
 			}
 		}
-		// TODO custom error?
-		return null; // no customer with ID found.
+		throw new DataNotFoundException(
+				"Customer with customer ID "+customerId+" not found.");
 	}
 	
 	
@@ -435,8 +437,8 @@ public class DatabaseMock {
 				return deletedReservation;
 			}
 		}
-		// TODO custom error?
-		return null; 
+		throw new DataNotFoundException(
+				"Reservation with reservation ID "+reservationId+" not found."); 
 	}
 	
 

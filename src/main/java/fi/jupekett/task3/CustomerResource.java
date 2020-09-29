@@ -8,7 +8,10 @@ import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 
 
-
+/**
+ * Root resource (exposed at "customers" path)
+ * @author Juho Kettunen (jupekett)
+ */
 @Path("/customers")
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
@@ -39,7 +42,6 @@ public class CustomerResource {
 	@Path("/{customerId}")
 	public Customer getCustomer(@PathParam("customerId") int id) {
 		Customer customer = customerService.getCustomer(id);
-		// TODO error handling
 		return customer;
 	}
 	

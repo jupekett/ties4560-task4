@@ -35,11 +35,15 @@ public class AccommodationService {
 		List<Owner> owners = ownerService.getAllOwners();
 		for (Owner owner : owners) {
 			if (owner.getId() == ownerId) {
-				return owner.getAccommodations();
+				var accommodations = owner.getAccommodations();
+				if (accommodations == null || accommodations.size() == 0) {
+					throw new DataNotFoundException(
+							"Owner with ID "+ownerId+" doesn't have any accommodations.");
+				}
+				return accommodations;
 			}
 		}
-		// TODO some status rather than null?
-		return null;
+		throw new DataNotFoundException("Owner with ID "+ownerId+" not found.");
 	} 
 
 	
@@ -53,18 +57,16 @@ public class AccommodationService {
 	public Accommodation getAccommodation(int ownerId, int accommodationId) {
 		OwnerService ownerService = new OwnerService();
 		Owner owner = ownerService.getOwner(ownerId);
-		if (owner == null) {
-			// TODO error response
-			return null;
-		}
 		List<Accommodation> accommodations = owner.getAccommodations();
 		for (var accommodation : accommodations) {
 			if (accommodation.getId() == accommodationId) {
 				return accommodation;
 			}
 		}
-		// TODO 404 response
-		return null;
+		throw new DataNotFoundException(
+				"Accommodation with owner ID "+ownerId+
+				" and accommodation ID "+accommodationId+
+				" not found.");
 	} 
 	
 	

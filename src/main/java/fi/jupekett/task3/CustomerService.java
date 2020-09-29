@@ -36,8 +36,7 @@ public class CustomerService {
 				return customer;
 			}
 		}
-		// TODO error response
-		return null;
+		throw new DataNotFoundException("Customer with ID "+id+" not found.");
 	}
 	
 	
@@ -49,7 +48,6 @@ public class CustomerService {
 	 */
 	public Customer addCustomer(Customer customer) {
 		Customer addedCustomer = database.addCustomer(customer);
-		// TODO errors?
 		return addedCustomer;
 	}
 	

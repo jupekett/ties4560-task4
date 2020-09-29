@@ -1,5 +1,9 @@
 package fi.jupekett.task3;
 
+
+/**
+ * @author Oleksiy Khriyenko
+ */
 public class Link {
 	private String link;
 	private String rel;

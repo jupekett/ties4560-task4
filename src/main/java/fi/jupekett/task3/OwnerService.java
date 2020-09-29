@@ -36,8 +36,7 @@ public class OwnerService {
 				return owner;
 			}
 		}
-		// TODO 404 response
-		return null;
+		throw new DataNotFoundException("Owner with ID "+id+" not found.");
 	}
 	
 	
@@ -48,7 +47,6 @@ public class OwnerService {
 	 */
 	public Owner addOwner(Owner owner) {
 		Owner addedOdwner = database.addOwner(owner);
-		// TODO what about error?
 		return addedOdwner;
 	}
 	

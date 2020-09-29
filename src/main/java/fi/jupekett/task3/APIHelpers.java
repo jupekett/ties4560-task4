@@ -111,16 +111,4 @@ public class APIHelpers {
 		
 	}
 	
-	
-	/**
-	 * Returns an error message as a JSON string.
-	 * @param status HTTP status code to be returned.
-	 * @param message Error message to be returned.
-	 * @return Error message as JSON.
-	 */
-	public static String getErrorJson(int status, String message) {
-		ErrorJson error = new ErrorJson(status, message);
-		return error.toString();
-	}
-
 }

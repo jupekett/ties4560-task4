@@ -34,11 +34,14 @@ public class ReservationService {
 		List<Customer> customers = customerService.getAllCustomers();
 		for (Customer customer : customers) {
 			if (customer.getId() == customerId) {
+				var reservations = customer.getReservations();
+				if (reservations == null || reservations.size() == 0) {
+					throw new DataNotFoundException("Customer with ID "+customerId+" has no reservations.");
+				}
 				return customer.getReservations();
 			}
 		}
-		// TODO some status rather than null?
-		return null;
+		throw new DataNotFoundException("Customer with ID "+customerId+" not found.");
 	}
 	
 	
@@ -51,18 +54,18 @@ public class ReservationService {
 	public Reservation getReservation(int customerId, int reservationId) {
 		CustomerService customerService = new CustomerService();
 		Customer customer = customerService.getCustomer(customerId);
-		if (customer == null) {
-			// TODO response
-			return null;
-		}
 		List<Reservation> reservations = customer.getReservations();
+		if (reservations.size() == 0) {
+			throw new DataNotFoundException("Customer with ID "+customerId+" has no reservations.");
+		}
 		for (var reservation : reservations) {
 			if (reservation.getId() == reservationId) {
 				return reservation;
 			}
 		}
-		// TODO response
-		return null;
+		throw new DataNotFoundException(
+				"Reservation with customer ID "+customerId+
+				" and reservation ID "+reservationId+" not found.");
 	}
 	
 	

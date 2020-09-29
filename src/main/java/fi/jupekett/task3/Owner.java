@@ -45,7 +45,6 @@ public class Owner {
 	
 	public void addAccommodation(Accommodation accommodation) {
 		this.accommodations.add(accommodation);
-		// TODO what to return? Owner, List or maybe boolean?
 	}
 	
 
@@ -91,7 +90,6 @@ public class Owner {
 	}
 
 	public void setAccommodations(List<Accommodation> accommodations) {
-		// TODO verification
 		this.accommodations = accommodations;
 	}
 
