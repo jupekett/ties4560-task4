@@ -56,7 +56,10 @@ public class ReservationResource {
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addReservation(@PathParam("customerId") int customerId, Reservation reservation) {
+    public Response addReservation(
+    		@PathParam("customerId") int customerId, 
+    		Reservation reservation) 
+    {
     	if (LOGGING) System.out.println("ReservationResource.java - addReservation- " + reservation);
     	Reservation newReservation = reservationService.addReservation(customerId, reservation);
     	if (newReservation == null) {
@@ -67,5 +70,27 @@ public class ReservationResource {
     					.header("Content-Type", MediaType.TEXT_PLAIN)
     					.entity(location)
     					.build();
+    }
+    
+    
+    
+    @DELETE
+    @Path("/{reservationId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteReservation(@PathParam("customerId") int customerId, 
+    		@PathParam("reservationId") int reservationId) 
+    {
+    	if (LOGGING) System.out.println(
+    			"ReservationResource.java - deleteReservation- "+customerId+" "+reservationId);
+    	Reservation deletedReservation = reservationService.deleteReservation(customerId, reservationId);
+    	if (deletedReservation == null) {
+    		// TODO custom error?
+    		return Response.status(Status.NOT_FOUND)
+    					   .build();
+    	}
+    	return Response.status(Status.OK)
+    				   .header("Content-Type", MediaType.APPLICATION_JSON)
+    				   .entity(deletedReservation)
+    				   .build();
     }
 }

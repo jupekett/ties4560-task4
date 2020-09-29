@@ -63,6 +63,7 @@ public class CustomerResource {
 	
 	/**
 	 * Update a customer. Eventually is only supposed to update the email field.
+	 * 		FIXME breaks the data structure if using an ID larger that the largest already used.
 	 * @param customerId
 	 * @param customer
 	 * @return 204 if modified. 201 with location if added new. 

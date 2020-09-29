@@ -356,7 +356,7 @@ public class DatabaseMock {
 	/**
 	 * Updates a customer. Can only change email attribute 
 	 * (because pseudo security reasons).
-	 * 		FIXME data structure breaks if you successfully update a customer with
+	 * 		FIXME data structure breaks if you update (add) a customer with
 	 * 		an ID larger than largest ID already used.
 	 * @param customerId
 	 * @param customer
@@ -389,6 +389,54 @@ public class DatabaseMock {
 				);
 		this.customers.add(newCustomer);
 		return newCustomer;
+	}
+	
+	
+	/**
+	 * Deletes the wanted reservation from customer, and reservations.
+	 * @param customerId
+	 * @param reservationId
+	 * @return the deleted reservation, or null if not found.
+	 */
+	public Reservation deleteReservation(int customerId, int reservationId) {
+		for (int i = 0; i < this.customers.size(); i++) {
+			Customer pointedCustomer = this.customers.get(i);
+			if (pointedCustomer.getId() == customerId) {
+				List<Reservation> reservations = pointedCustomer.getReservations();
+				for (int j = 0; j < reservations.size(); j++) {
+					Reservation pointedReservation = reservations.get(j);
+					if (pointedReservation.getId() == reservationId) {
+						reservations.remove(j);
+						Reservation deletedReservation = deleteFromReservations(reservationId, this.reservations);
+						return deletedReservation;
+					}
+				}
+				// TODO custom error?
+				return null; // no reservation found on customer.
+			}
+		}
+		// TODO custom error?
+		return null; // no customer with ID found.
+	}
+	
+	
+	
+	/**
+	 * Removes a reservation from given reservation list.
+	 * @param reservationId
+	 * @param reservations
+	 * @return the deleted reservation.
+	 */
+	private Reservation deleteFromReservations(int reservationId, List<Reservation> reservations) {
+		for (int i = 0; i < reservations.size(); i++) {
+			Reservation pointedReservation = reservations.get(i);
+			if (pointedReservation.getId() == reservationId) {
+				Reservation deletedReservation = reservations.remove(i);
+				return deletedReservation;
+			}
+		}
+		// TODO custom error?
+		return null; 
 	}
 	
 

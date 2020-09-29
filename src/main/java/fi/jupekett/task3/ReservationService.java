@@ -76,5 +76,18 @@ public class ReservationService {
 		Reservation addedReservation = database.addReservation(customerId, reservation);
 		return addedReservation;
 	}
+	
+	
+	/**
+	 * Deletes a reservation from a customer.
+	 * @param customerId
+	 * @param reservationId
+	 * @return the deleted reservation.
+	 */
+	public Reservation deleteReservation(int customerId, int reservationId) {
+		Reservation deletedReservation = database.deleteReservation(customerId, reservationId);
+		return deletedReservation;
+	}
+	
 
 }
