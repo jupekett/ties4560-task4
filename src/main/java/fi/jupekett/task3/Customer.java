@@ -16,8 +16,7 @@ public class Customer {
 	
 	
 	public Customer() {
-		this.id = -1;
-		this.name = "";
+		// default
 	}
 	
 	

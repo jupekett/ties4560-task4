@@ -61,13 +61,29 @@ public class CustomerResource {
 	}
 	
 	
-//	/**
-//	 * Delegates reservation handling to appropriate class
-//	 * @return
-//	 */
-//	@Path("/{customerId}/reservations")
-//	public ReservationResource getReservationResource() {
-//		return new ReservationResource();
-//	}
+	/**
+	 * Update a customer. Eventually is only supposed to update the email field.
+	 * @param customerId
+	 * @param customer
+	 * @return 204 if modified. 201 with location if added new. 
+	 */
+	@PUT
+	@Path("/{customerId}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateCustomer(@PathParam("customerId") int customerId, Customer customer) {
+		Customer addedCustomer = customerService.updateCustomer(customerId, customer);
+		boolean addedNewCustomer = addedCustomer != null;
+		if (addedNewCustomer) {
+			String location = URI_STRING + addedCustomer.getId();
+			return Response.status(Status.CREATED)
+						   .header("Content-Type", MediaType.TEXT_PLAIN)
+						   .entity(location)
+						   .build();
+		} else  {
+			return Response.status(Status.NO_CONTENT)
+						   .build();
+		}
+	}
+	
 			
 }

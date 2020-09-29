@@ -11,7 +11,7 @@ public class Reservation {
 	
 	
 	public Reservation() {
-		this.id = -1;
+		//
 	}
 	
 	

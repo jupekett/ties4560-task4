@@ -67,6 +67,17 @@ public class CustomerService {
 	}
 	
 	
+	/**
+	 * Update a customer given an ID
+	 * @param id Customer ID from path parameter.
+	 * @param customer
+	 * @return null if modified. Customer if added.
+	 */
+	public Customer updateCustomer(int id, Customer customer) {
+		Customer addedCustomer = database.updateCustomer(id, customer);
+		return addedCustomer;
+	}
+	
 	
 
 }

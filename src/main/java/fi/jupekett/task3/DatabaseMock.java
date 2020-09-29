@@ -39,11 +39,11 @@ public class DatabaseMock {
 		this.owners = getInitialOwners(4, this);
 		
 		this.nextReservationId = 0;
-		this.reservations = getInitialReservations(15, this);
+		this.reservations = getInitialReservations(10, this);
 		
 		// reservations need to be instantiated first (in this random mock)
 		this.nextCustomerId = 0;
-		this.customers = getInitialCustomers(15, this);
+		this.customers = getInitialCustomers(4, this);
 	}
 	
 	
@@ -326,7 +326,6 @@ public class DatabaseMock {
 	}
 	
 	
-	
 	/**
 	 * Adds a reservation to a certain customer in the "database"
 	 * @param customerId
@@ -351,6 +350,45 @@ public class DatabaseMock {
 		}
 		// TODO response?
 		return null;
+	}
+	
+	
+	/**
+	 * Updates a customer. Can only change email attribute 
+	 * (because pseudo security reasons).
+	 * 		FIXME data structure breaks if you successfully update a customer with
+	 * 		an ID larger than largest ID already used.
+	 * @param customerId
+	 * @param customer
+	 * @return
+	 */
+	public Customer updateCustomer(int customerId, Customer customer) {
+		// Check if there is a customer with this ID in the array.
+		for (int i = 0; i < this.customers.size(); i++) {
+			Customer pointedCustomer = this.customers.get(i);
+			if (pointedCustomer.getId() == customerId) {
+				Customer modifiedCustomer = new Customer(
+						customerId, 
+						pointedCustomer.getName(), 
+						customer.getEmail(), 
+						pointedCustomer.getReservations()
+						);
+				this.customers.set(i, modifiedCustomer);
+				return null;
+			}
+		}
+		// No customer with given array.
+		if (customer.getName() == null) {
+			// TODO throw error, because you can't new customer without name.
+		}
+		Customer newCustomer = new Customer(
+				customerId, 
+				customer.getName(), 
+				customer.getEmail(), 
+				customer.getReservations()
+				);
+		this.customers.add(newCustomer);
+		return newCustomer;
 	}
 	
 
