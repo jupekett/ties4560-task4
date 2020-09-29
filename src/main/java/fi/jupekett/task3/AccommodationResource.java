@@ -8,8 +8,9 @@ import javax.ws.rs.core.Response.Status;
 
 /**
  * Root resource (exposed at "owners/{ownerId}/accommodations" path)
+ * @author Juho Kettunen (jupekett)
  */
-@Path("/")
+@Path("/owners/{ownerId}/accommodations")
 @Produces(MediaType.APPLICATION_JSON)
 public class AccommodationResource {
 	private AccommodationService accommodationService = new AccommodationService();
@@ -63,25 +64,5 @@ public class AccommodationResource {
     					.entity(location)
     					.build();
     }
-    
-    
-    /**
-     * Handle POST as plain text
-     * @param name Accommodation name in plain text
-     * @return Resource location in response body
-     */
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    public Response addAccommodation(@PathParam("ownerId") int ownerId, String name) {
-    	if (LOGGING) System.out.println("AccommodationResource.java - addAccommodation- " + name);
-    	Accommodation newAccommodation = new Accommodation(name);
-    	Accommodation addedAccommodation = accommodationService.addAccommodation(ownerId, newAccommodation);
-    	String location = URI_STRING + ownerId + "/accommodations/" + addedAccommodation.getId(); 
-    	return Response.status(Status.CREATED)
-    					.header("Content-Type", MediaType.TEXT_PLAIN)
-    					.entity(location)
-    					.build();
-    }
-    
     
 }

@@ -14,24 +14,30 @@ public class Owner {
 	private String name;
 	private List<Accommodation> accommodations = new ArrayList<>();
 		
+	
 	public Owner() {
-		// default constructor
+		this.id = -1;
+		this.name = "";
 	}
+	
 	
 	public Owner(String name) {
 		this.name = name;
 	}
+	
 	
 	public Owner(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
+	
 	public Owner(int id, String name, List<Accommodation> accommodations) {
 		this.id = id;
 		this.name = name;
 		this.accommodations = accommodations;
 	}
+	
 	
 	public void addAccommodation(Accommodation accommodation) {
 		this.accommodations.add(accommodation);

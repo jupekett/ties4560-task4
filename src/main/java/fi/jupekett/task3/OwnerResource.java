@@ -17,7 +17,7 @@ public class OwnerResource {
 	private static final boolean LOGGING = true;
 	
     /**
-     * GET all owners 
+     * Handle getting all owners. 
      * @return
      */
     @GET
@@ -28,6 +28,11 @@ public class OwnerResource {
     }
     
     
+    /**
+     * Handle getting a certain owner based on ID.
+     * @param id
+     * @return
+     */
     @GET
     @Path("/{ownerId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -42,9 +47,9 @@ public class OwnerResource {
     
     
     /**
-     * POST an owner in JSON form
+     * Handle POST with an owner in request body as JSON
      * @param owner
-     * @return Resource location in response body
+     * @return Resource location in response body.
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -58,33 +63,14 @@ public class OwnerResource {
     					.build();
     }
     
-    
-    /**
-     * POST an owner with a name in plain text.
-     * @param owner
-     * @return Resource location in response body
-     */
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    public Response addOwner(String name) {
-    	if (LOGGING) System.out.println("OwnerResource.java - addOwner - " + name);
-    	Owner newOwner = new Owner(name);
-    	Owner addedOwner = ownerService.addOwner(newOwner);
-    	String location = URI_STRING + addedOwner.getId(); 
-    	return Response.status(Status.CREATED)
-    					.header("Content-Type", MediaType.TEXT_PLAIN)
-    					.entity(location)
-    					.build();
-    }
-    
-    
-    /**
-     * Delegates accommodation handling to appropriate class.
-     * @return
-     */
-    @Path("/{ownerId}/accommodations")
-    public AccommodationResource getAccommodationResource() {
-    	return new AccommodationResource();
-    }
+
+//    /**
+//     * Delegates accommodation handling to appropriate class.
+//     * @return
+//     */
+//    @Path("/{ownerId}/accommodations")
+//    public AccommodationResource getAccommodationResource() {
+//    	return new AccommodationResource();
+//    }
     
 }

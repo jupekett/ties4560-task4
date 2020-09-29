@@ -14,11 +14,16 @@ import java.util.Set;
  */
 public class DatabaseMock {
 	private static DatabaseMock instance;
-	private List<Owner> owners;
-	private int nextOwnerId;
-	
+
 	private List<Accommodation> accommodations;
+	private List<Customer> customers;
+	private List<Owner> owners;
+	private List<Reservation> reservations;
+	
+	private int nextOwnerId;
 	private int nextAccommodationId;
+	private int nextCustomerId;
+	private int nextReservationId;
 	
 	
 	/**
@@ -27,9 +32,18 @@ public class DatabaseMock {
 	 */
 	private DatabaseMock() {	
 		this.nextAccommodationId = 0;
-		this.accommodations = getInitialAccommodations(this);
+		this.accommodations = getInitialAccommodations(10, this);
+
+		// accommodations need to be instantiated first
 		this.nextOwnerId = 0;
-		this.owners = getInitialOwners(this);
+		this.owners = getInitialOwners(4, this);
+		
+		this.nextReservationId = 0;
+		this.reservations = getInitialReservations(15, this);
+		
+		// reservations need to be instantiated first (in this random mock)
+		this.nextCustomerId = 0;
+		this.customers = getInitialCustomers(15, this);
 	}
 	
 	
@@ -46,13 +60,14 @@ public class DatabaseMock {
 	
 	
 	/**
-	 * Initializes the list of accommodations
+	 * Initializes the list of accommodations with random data.
+	 * @param count Number of initial accommodations.
 	 * @param database
 	 * @return
 	 */
-	private List<Accommodation> getInitialAccommodations(DatabaseMock database) {
+	private List<Accommodation> getInitialAccommodations(int count, DatabaseMock database) {
 		List<Accommodation> accommodations = new ArrayList<>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < count; i++) {
 			int id = database.nextAccommodationId++;
 			String name = APIHelpers.getRandomResortName();
 			Accommodation accommodation = new Accommodation(id, name);
@@ -63,15 +78,17 @@ public class DatabaseMock {
 	
 	
 	/**
-	 * Initializes the list of owners.
+	 * Initializes the list of owners with random data.
+	 * @param countNumber of initial owners
+	 * @param database
 	 * @return
 	 */
-	private List<Owner> getInitialOwners(DatabaseMock database) {
+	private List<Owner> getInitialOwners(int count, DatabaseMock database) {
 		List<Owner> owners = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < count; i++) {
 			int id = database.nextOwnerId++;
 			String name = APIHelpers.getRandomPersonName();
-			List<Accommodation> accommodations = getRandomAccommodations(this.accommodations);
+			List<Accommodation> accommodations = getRandomAccommodations(3, this.accommodations);
 			Owner owner = new Owner(id, name, accommodations);
 			owners.add(owner);
 		}
@@ -81,12 +98,13 @@ public class DatabaseMock {
 	
 	/**
 	 * Returns a random number of random accommodations from available accommodations.
+	 * @param max Maximum number of accommodations.
 	 * @param accommodations
 	 * @return
 	 */
-	private List<Accommodation> getRandomAccommodations(List<Accommodation> accommodations) {
+	private List<Accommodation> getRandomAccommodations(int max, List<Accommodation> accommodations) {
 		Random rand = new Random();
-		int numberOfAccommodations = rand.nextInt(4);
+		int numberOfAccommodations = rand.nextInt(max + 1);
 		List<Accommodation> randomAccommodations = new ArrayList<Accommodation>(); 
 		
 		// Create a set of random array indices 
@@ -105,8 +123,77 @@ public class DatabaseMock {
 	
 	
 	/**
-	 * Returns all owners.
+	 * Initializes the list of reservations with random data.
+	 * @param count
+	 * @param database
 	 * @return
+	 */
+	private List<Reservation> getInitialReservations(int count, DatabaseMock database) {
+		Random rand = new Random();
+		List<Reservation> reservations = new ArrayList<>();
+		for (int i = 0; i < count; i++) {
+			int id = database.nextReservationId++;
+			Accommodation accommodation = 
+					this.accommodations.get(rand.nextInt(this.accommodations.size()));
+			Reservation newReservation = new Reservation(id, accommodation.getId());
+			reservations.add(newReservation);
+		}
+		return reservations;
+	}
+	
+	
+	
+	/**
+	 * Initializes the list for customers with random data
+	 * @param count number of initial customers.
+	 * @param database
+	 * @return
+	 */
+	private List<Customer> getInitialCustomers(int count, DatabaseMock database) {
+		List<Customer> customers= new ArrayList<>();
+		for (int i = 0; i < count; i++) {
+			int id = database.nextCustomerId++;
+			String name = APIHelpers.getRandomPersonName();
+			String email = APIHelpers.getRandomEmail(name);
+			List<Reservation> reservations = getRandomReservations(2, this.accommodations);
+			Customer customer = new Customer(id, name, email, reservations);
+			customers.add(customer);
+		}
+		return customers;
+	}
+	
+	
+	
+	/**
+	 * Returns a random number of accommodations
+	 * @param max Maximum number of reservations.
+	 * @param reservations
+	 * @return
+	 */
+	private List<Reservation> getRandomReservations(int max, List<Accommodation> accommodations) {
+		Random rand = new Random();
+		int numberOfReservations = rand.nextInt(max + 1);
+		List<Reservation> randomReservations= new ArrayList<Reservation>(); 
+		
+		// Create a set of random array indices 
+		Set<Integer> indices = new HashSet<Integer>();
+		for (int i = 0; i < numberOfReservations; i++) {
+			int index = rand.nextInt(accommodations.size());
+			indices.add(index);
+		}
+		// Pick accommodations based on generated indices
+		for (int index : indices) {
+			int accommodationId = accommodations.get(index).getId();
+			Reservation reservation = new Reservation(this.nextReservationId++, accommodationId);
+			randomReservations.add(reservation);
+		}
+		return randomReservations;
+
+	}
+	
+	
+	/**
+	 * @return All customers.
 	 */
 	public List<Owner> getAllOwners() {
 		return this.owners;
@@ -114,11 +201,26 @@ public class DatabaseMock {
 	
 	
 	/**
-	 * Returns all accommodations
-	 * @return
+	 * @return All customers.
 	 */
 	public List<Accommodation> getAllAccommodations() {
 		return this.accommodations;
+	}
+	
+	
+	/**
+	 * @return All customers.
+	 */
+	public List<Customer> getAllCustomers() {
+		return this.customers;
+	}
+	
+	
+	/**
+	 * @return all reservations.
+	 */
+	public List<Reservation> getAllReservations() {
+		return this.reservations;
 	}
 	
 	
@@ -155,10 +257,49 @@ public class DatabaseMock {
 				return newAccommodation;
 			}
 		}
+		// TODO response?
 		return null;
 	}
 	
 	
+	/**
+	 * Adds a customer to the "database"
+	 * @param customer
+	 * @return The added customer.
+	 */
+	public Customer addCustomer(Customer customer) {
+		Customer newCustomer = new Customer(
+				this.nextCustomerId++, 
+				customer.getName(), 
+				customer.getEmail(),
+				customer.getReservations()
+				);
+		this.customers.add(newCustomer);
+		return newCustomer;
+	}
+	
+	
+	
+	/**
+	 * Adds a reservation to a certain customer in the "database"
+	 * @param customerId
+	 * @param reservation
+	 * @return the added reservation
+	 */
+	public Reservation addReservation(int customerId, Reservation reservation) {
+		for (Customer customer : this.customers) {
+			if (customer.getId() == customerId) {
+				Reservation newReservation = new Reservation(
+						this.nextReservationId++,
+						reservation.getAccommodationId()
+						);
+				customer.addReservation(newReservation);
+				return newReservation;
+			}
+		}
+		// TODO response?
+		return null;
+	}
 	
 
 }

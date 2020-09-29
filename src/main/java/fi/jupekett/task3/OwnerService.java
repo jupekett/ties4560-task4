@@ -26,7 +26,7 @@ public class OwnerService {
 	
 	
 	/**
-	 * Returns an owner based on it's ID.
+	 * Returns an owner based on its ID.
 	 * @param id
 	 * @return
 	 */

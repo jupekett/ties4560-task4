@@ -64,6 +64,17 @@ public class APIHelpers {
 		};
 	
 	
+	private static String[] EMAIL_PROVIDERS =
+		{
+				"yahoo.com"
+				,"gmail.com"
+				,"luukku.com"
+				,"sunpoint.fi"
+				,"outlook.com"
+				,"hotmail.com"
+		};
+	
+	
 	/**
 	 * Returns a random person name.
 	 * @return
@@ -84,6 +95,20 @@ public class APIHelpers {
 		String firstPart = RESORT_PREFIXES[rand.nextInt(RESORT_PREFIXES.length)];
 		String lastPart = RESORT_POSTFIXES[rand.nextInt(RESORT_POSTFIXES.length)];
 		return firstPart + " " + lastPart;
+	}
+	
+	
+	/**
+	 * Returns a semi-random email address based on name.
+	 * @param name
+	 * @return
+	 */
+	public static String getRandomEmail(String name) {
+		Random rand = new Random();
+		String convertedName = name.toLowerCase().replaceAll(" ", ".");
+		String provider = EMAIL_PROVIDERS[rand.nextInt(EMAIL_PROVIDERS.length)];
+		return convertedName + "@" + provider;
+		
 	}
 	
 	

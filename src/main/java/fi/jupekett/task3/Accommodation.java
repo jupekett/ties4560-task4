@@ -28,7 +28,7 @@ public class Accommodation {
 
 	@Override
 	public String toString() {
-		return "ID: " + this.getId() + ", name: " + this.getName();
+		return "Accommodation ID: " + this.getId() + ", name: " + this.getName();
 	}
 	
 	

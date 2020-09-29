@@ -27,6 +27,7 @@ public class AccommodationService {
 
 	/**
 	 * Returns a list of owner's accommodations based on owner ID.
+	 * @param ownerId
 	 * @return
 	 */
 	public List<Accommodation> getOwnersAccommodations(int ownerId) {
@@ -37,7 +38,7 @@ public class AccommodationService {
 				return owner.getAccommodations();
 			}
 		}
-		// TODO 404 response
+		// TODO some status rather than null?
 		return null;
 	} 
 
@@ -45,6 +46,9 @@ public class AccommodationService {
 	
 	/**
 	 * Returns an accommodation based on owner ID and accommodation ID.
+	 * @param ownerId
+	 * @param accommodationId
+	 * @return 
 	 */
 	public Accommodation getAccommodation(int ownerId, int accommodationId) {
 		OwnerService ownerService = new OwnerService();
@@ -71,8 +75,8 @@ public class AccommodationService {
 	 * @return The added accommodation.
 	 */
 	public Accommodation addAccommodation(int ownerId, Accommodation accommodation) {
-		Accommodation newAccommodation = database.addAccommodation(ownerId, accommodation);
-		return newAccommodation;
+		Accommodation addedAccommodation = database.addAccommodation(ownerId, accommodation);
+		return addedAccommodation;
 	}
 
 }
