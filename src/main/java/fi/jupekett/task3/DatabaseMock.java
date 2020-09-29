@@ -18,7 +18,7 @@ public class DatabaseMock {
 	private List<Accommodation> accommodations;
 	private List<Customer> customers;
 	private List<Owner> owners;
-	private List<Reservation> reservations;
+	private List<Reservation> reservations = new ArrayList<>();
 	
 	private int nextOwnerId;
 	private int nextAccommodationId;
@@ -155,7 +155,7 @@ public class DatabaseMock {
 			int id = database.nextCustomerId++;
 			String name = APIHelpers.getRandomPersonName();
 			String email = APIHelpers.getRandomEmail(name);
-			List<Reservation> reservations = getRandomReservations(2, this.accommodations);
+			List<Reservation> reservations = distributeReservations(2, this.reservations);
 			Customer customer = new Customer(id, name, email, reservations);
 			customers.add(customer);
 		}
@@ -170,7 +170,7 @@ public class DatabaseMock {
 	 * @param reservations
 	 * @return
 	 */
-	private List<Reservation> getRandomReservations(int max, List<Accommodation> accommodations) {
+	private List<Reservation> distributeReservations(int max, List<Reservation> reservations) {
 		Random rand = new Random();
 		int numberOfReservations = rand.nextInt(max + 1);
 		List<Reservation> randomReservations= new ArrayList<Reservation>(); 
@@ -178,13 +178,12 @@ public class DatabaseMock {
 		// Create a set of random array indices 
 		Set<Integer> indices = new HashSet<Integer>();
 		for (int i = 0; i < numberOfReservations; i++) {
-			int index = rand.nextInt(accommodations.size());
+			int index = rand.nextInt(reservations.size());
 			indices.add(index);
 		}
 		// Pick accommodations based on generated indices
 		for (int index : indices) {
-			int accommodationId = accommodations.get(index).getId();
-			Reservation reservation = new Reservation(this.nextReservationId++, accommodationId);
+			Reservation reservation = reservations.get(index);
 			randomReservations.add(reservation);
 		}
 		return randomReservations;
