@@ -16,6 +16,10 @@ public class Accommodation {
 		this.name = "";
 	}
 	
+	public Accommodation(String name) {
+		this.name = name;
+	}
+	
 	public Accommodation(int id, String name) {
 		this.id = id;
 		this.name = name;

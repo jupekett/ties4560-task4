@@ -48,8 +48,8 @@ public class AccommodationResource {
     
     
     /**
-     * POST an accommodation
-     * @param accommodation
+     * Handle POST as JSON
+     * @param accommodation Accommodation as JSON
      * @return Resource location in response body
      */
     @POST
@@ -63,5 +63,25 @@ public class AccommodationResource {
     					.entity(location)
     					.build();
     }
+    
+    
+    /**
+     * Handle POST as plain text
+     * @param name Accommodation name in plain text
+     * @return Resource location in response body
+     */
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response addAccommodation(@PathParam("ownerId") int ownerId, String name) {
+    	if (LOGGING) System.out.println("AccommodationResource.java - addAccommodation- " + name);
+    	Accommodation newAccommodation = new Accommodation(name);
+    	Accommodation addedAccommodation = accommodationService.addAccommodation(ownerId, newAccommodation);
+    	String location = URI_STRING + ownerId + "/accommodations/" + addedAccommodation.getId(); 
+    	return Response.status(Status.CREATED)
+    					.header("Content-Type", MediaType.TEXT_PLAIN)
+    					.entity(location)
+    					.build();
+    }
+    
     
 }

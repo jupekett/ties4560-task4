@@ -42,14 +42,26 @@ public class OwnerService {
 	
 	
 	/**
-	 * Adds an owner
+	 * Adds an owner.
 	 * @param owner
-	 * @return
+	 * @return Owner that was added to the database.
 	 */
 	public Owner addOwner(Owner owner) {
-		Owner newOwner = database.addOwner(owner);
+		Owner addedOdwner = database.addOwner(owner);
 		// TODO what about error?
-		return newOwner;
+		return addedOdwner;
+	}
+	
+	
+	/**
+	 * Adds an owner based on a name.
+	 * @param name
+	 * @return Owner that was added to the database.
+	 */
+	public Owner addOwner(String name) {
+		Owner newOwner = new Owner(name);
+		Owner addedOwner = database.addOwner(newOwner);
+		return addedOwner;
 	}
 
 }

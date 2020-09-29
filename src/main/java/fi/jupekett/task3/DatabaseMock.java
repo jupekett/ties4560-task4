@@ -104,7 +104,6 @@ public class DatabaseMock {
 	}
 	
 	
-	
 	/**
 	 * Returns all owners.
 	 * @return
@@ -122,7 +121,6 @@ public class DatabaseMock {
 		return this.accommodations;
 	}
 	
-
 	
 	/**
 	 * Adds an owner to the "database"

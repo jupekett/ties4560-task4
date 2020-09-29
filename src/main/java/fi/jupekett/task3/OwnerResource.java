@@ -42,7 +42,7 @@ public class OwnerResource {
     
     
     /**
-     * POST an owner
+     * POST an owner in JSON form
      * @param owner
      * @return Resource location in response body
      */
@@ -52,6 +52,25 @@ public class OwnerResource {
     	if (LOGGING) System.out.println("OwnerResource.java - addOwner - " + owner);
     	Owner newOwner = ownerService.addOwner(owner);
     	String location = URI_STRING + newOwner.getId(); 
+    	return Response.status(Status.CREATED)
+    					.header("Content-Type", MediaType.TEXT_PLAIN)
+    					.entity(location)
+    					.build();
+    }
+    
+    
+    /**
+     * POST an owner with a name in plain text.
+     * @param owner
+     * @return Resource location in response body
+     */
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response addOwner(String name) {
+    	if (LOGGING) System.out.println("OwnerResource.java - addOwner - " + name);
+    	Owner newOwner = new Owner(name);
+    	Owner addedOwner = ownerService.addOwner(newOwner);
+    	String location = URI_STRING + addedOwner.getId(); 
     	return Response.status(Status.CREATED)
     					.header("Content-Type", MediaType.TEXT_PLAIN)
     					.entity(location)
