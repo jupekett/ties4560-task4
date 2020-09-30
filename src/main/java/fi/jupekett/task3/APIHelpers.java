@@ -5,8 +5,6 @@ import java.util.Random;
 
 /**
  * Various helper functions.
- * @author Juho Kettunen (jupekett)
- *
  */
 public class APIHelpers {
 	private static String[] FIRST_NAMES = 

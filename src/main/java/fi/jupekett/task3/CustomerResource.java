@@ -10,7 +10,6 @@ import javax.ws.rs.core.Response.Status;
 
 /**
  * Root resource (exposed at "customers" path)
- * @author Juho Kettunen (jupekett)
  */
 @Path("/customers")
 @Produces(MediaType.APPLICATION_JSON)

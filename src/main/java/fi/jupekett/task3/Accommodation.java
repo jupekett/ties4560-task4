@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * A class to represent an accommodation
- * @author Juho Kettunen (jupekett)
- *
  */
 public class Accommodation {
 	private int id;

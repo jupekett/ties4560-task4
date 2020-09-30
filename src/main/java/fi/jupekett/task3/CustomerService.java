@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * A class to mediate customer information between the API and "database"
- * @author Juho Kettunen (jupekett)
- *
  */
 public class CustomerService {
 	private DatabaseMock database = DatabaseMock.getInstance();

@@ -4,8 +4,6 @@ import java.util.List;
 
 /**
  * A class to mediate owner information between the API and "database"
- * @author Juho Kettunen (jupekett)
- *
  */
 public class OwnerService {
 	private DatabaseMock database = DatabaseMock.getInstance();

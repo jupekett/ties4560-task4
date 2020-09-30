@@ -9,8 +9,6 @@ import java.util.Set;
 
 /**
  * A mock of a database.
- * @author Juho Kettunen (jupekett)
- *
  */
 public class DatabaseMock {
 	private static DatabaseMock instance;

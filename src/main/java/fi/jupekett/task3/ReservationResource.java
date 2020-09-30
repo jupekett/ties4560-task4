@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response.Status;
 
 /**
  * Root resource (exposed at "customers/{customerId}/reservations" path)
- * @author Juho Kettunen (jupekett)
  */
 @Path("/customers/{customerId}/reservations")
 @Produces(MediaType.APPLICATION_JSON)

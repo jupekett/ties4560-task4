@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * A class to represent a reservation.
- * @author Juho Kettunen (jupekett)
  */
 public class Reservation {
 	private int id;

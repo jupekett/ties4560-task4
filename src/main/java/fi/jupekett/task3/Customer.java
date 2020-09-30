@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A class to represent a customer
- * @author Juho Kettunen (jupekett)
- *
  */
 @XmlRootElement
 public class Customer {

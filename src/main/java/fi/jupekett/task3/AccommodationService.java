@@ -4,8 +4,6 @@ import java.util.List;
 
 /**
  * A class to mediate accommodation data between API and "database"
- * @author Juho Kettunen (jupekett)
- *
  */
 public class AccommodationService {
 	private DatabaseMock database = DatabaseMock.getInstance();

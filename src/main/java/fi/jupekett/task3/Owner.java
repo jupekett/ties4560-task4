@@ -8,8 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A class to represent an accommodation owner
- * @author Juho Kettunen (jupekett)
- *
  */
 @XmlRootElement
 public class Owner {

@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * A class to mediate reservation data between the API and "database"
- * @author Juho Kettunen (jupekett)
  */
 public class ReservationService {
 	private DatabaseMock database = DatabaseMock.getInstance();
