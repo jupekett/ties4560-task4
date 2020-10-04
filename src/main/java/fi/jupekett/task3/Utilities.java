@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Various helper functions.
  */
-public class APIHelpers {
+public class Utilities {
 	private static String[] FIRST_NAMES = 
 		{
 				"James"
@@ -108,5 +108,20 @@ public class APIHelpers {
 		return convertedName + "@" + provider;
 		
 	}
+	
+	
+	/**
+	 * Checks for null, empty of whitespace string values.
+	 * @param array strings to be checked.
+	 * @return true if a string array contains null, empty or whitespace values.
+	 */
+	public static boolean someStringsAreNullOrBlank(String[] array) {
+		for (String str : array) {
+			if (str == null) return true;
+			if (str.isBlank()) return true;
+		}
+		return false;
+	}
+	
 	
 }

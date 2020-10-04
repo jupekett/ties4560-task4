@@ -67,7 +67,7 @@ public class DatabaseMock {
 		List<Accommodation> accommodations = new ArrayList<>();
 		for (int i = 0; i < count; i++) {
 			int id = database.nextAccommodationId++;
-			String name = APIHelpers.getRandomResortName();
+			String name = Utilities.getRandomResortName();
 			Accommodation accommodation = new Accommodation(id, name);
 			accommodations.add(accommodation);
 		}
@@ -85,7 +85,7 @@ public class DatabaseMock {
 		List<Owner> owners = new ArrayList<>();
 		for (int i = 0; i < count; i++) {
 			int id = database.nextOwnerId++;
-			String name = APIHelpers.getRandomPersonName();
+			String name = Utilities.getRandomPersonName();
 			List<Accommodation> accommodations = getRandomAccommodations(3, this.accommodations);
 			Owner owner = new Owner(id, name, accommodations);
 			owners.add(owner);
@@ -150,8 +150,8 @@ public class DatabaseMock {
 		List<Customer> customers= new ArrayList<>();
 		for (int i = 0; i < count; i++) {
 			int id = database.nextCustomerId++;
-			String name = APIHelpers.getRandomPersonName();
-			String email = APIHelpers.getRandomEmail(name);
+			String name = Utilities.getRandomPersonName();
+			String email = Utilities.getRandomEmail(name);
 			List<Reservation> reservations = distributeReservations(2, this.reservations);
 			Customer customer = new Customer(id, name, email, reservations);
 			customers.add(customer);

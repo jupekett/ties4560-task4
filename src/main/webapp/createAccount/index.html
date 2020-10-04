@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<title>Create a account</title>
+	<link rel="icon" type="image/png" href="../favicon.ico" />
+	<script src="createAccount.js" ></script>
+</head>
+<body>
+	<h1>Create a account</h1>
+	<div id="div-form">
+		<form name="form-create" method="post" action="createAccountServlet">
+			<p>
+				<label for="username">Username: </label>
+				<input type="text" name="username" minlength="4" required />
+			</p>
+			<p>
+				<label for="password">Password</label>
+				<input type="password" name="password" id="input-password" minlength="4" required />
+			</p>
+			<p>
+				<label for="passwordCheck">Same password again</label>
+				<input type="password" name="passwordCheck" id="input-passwordCheck" minlength="4" required />
+			</p>
+			<p>
+				<label for="radio-customer">Customer</label>
+				<input type="radio" name="role" value="customer" id="radio-customer" required checked="checked"/>
+			</p>
+			<p>
+				<label for="radio-owner">Owner</label>
+				<input type="radio" name="role" value="owner" id="radio-owner" required />
+			</p>
+			<input type="submit" value="Create account"/>
+		</form>
+	</div>
+
+</body>
+</html>
