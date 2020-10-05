@@ -1,10 +1,11 @@
 package fi.jupekett.task3.credentials;
 
+import java.security.Principal;
 
 /**
  * Represents the credentials of a user
  */
-public class Credentials {
+public class Credentials implements Principal{
 	
 	private String email;
 	private String password;
@@ -54,6 +55,16 @@ public class Credentials {
 		return this.email.equals(creds.email) 
 				&& this.password.equals(creds.password)
 				&& this.role.equals(creds.role); 
+	}
+
+
+	/**
+	 * FIXME fakes the implementation, not name but email
+	 * @return
+	 */
+	@Override
+	public String getName() {
+		return email;
 	}
 
 }
