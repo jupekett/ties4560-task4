@@ -38,6 +38,22 @@ public class OwnerService {
 	}
 	
 	
+
+	/**
+	 * Returns an owner based on its email
+	 * @param email
+	 * @return
+	 */
+	public Owner getOwnerByEmail(String email) {
+		for (Owner owner : OWNERS) {
+			if (owner.getEmail().equals(email)) {
+				return owner;
+			}
+		}
+		throw new DataNotFoundException("Owner with email "+email+" not found.");
+	}
+	
+	
 	/**
 	 * Adds an owner.
 	 * @param owner
@@ -60,5 +76,7 @@ public class OwnerService {
 		Owner addedOwner = database.addOwner(newOwner);
 		return addedOwner;
 	}
+
+
 
 }

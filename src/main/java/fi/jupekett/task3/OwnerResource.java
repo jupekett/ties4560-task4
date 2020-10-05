@@ -78,15 +78,4 @@ public class OwnerResource {
     					.entity(newOwner)
     					.build();
     }
-    
-
-//    /**
-//     * Delegates accommodation handling to appropriate class.
-//     * @return
-//     */
-//    @Path("/{ownerId}/accommodations")
-//    public AccommodationResource getAccommodationResource() {
-//    	return new AccommodationResource();
-//    }
-    
 }

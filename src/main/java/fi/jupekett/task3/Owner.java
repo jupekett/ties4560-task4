@@ -17,6 +17,11 @@ public class Owner {
 	
 	private List<Accommodation> accommodations = new ArrayList<>();
 	private List<Link> links = new ArrayList<>();
+	
+	
+	public Owner() {
+		//
+	}
 		
 	
 	public Owner(String name, String email) {
