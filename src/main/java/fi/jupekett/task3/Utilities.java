@@ -1,6 +1,7 @@
 package fi.jupekett.task3;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 
 /**
@@ -121,6 +122,40 @@ public class Utilities {
 			if (str.isBlank()) return true;
 		}
 		return false;
+	}
+	
+	
+	/**
+	 * Validates email address format
+	 * @param email
+	 * @return true if valid.
+	 */
+	public static boolean isValid(String email) 
+    { 
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
+                            "[a-zA-Z0-9_+&*-]+)*@" + 
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+                            "A-Z]{2,7}$"; 
+                              
+        Pattern pat = Pattern.compile(emailRegex); 
+        if (email == null) 
+            return false; 
+        return pat.matcher(email).matches(); 
+    } 
+	
+	
+	/**
+	 * Returns the email if valid, and throws exception if not.
+	 * @param email
+	 * @return
+	 */
+	public static String getValidEmailOrThrow(String email) {
+		boolean emailIsValid = isValid(email);
+		if (!emailIsValid) {
+			throw new IllegalArgumentException("Email address format is not valid.");
+		}
+		return email;
+		
 	}
 	
 	

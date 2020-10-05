@@ -86,8 +86,9 @@ public class DatabaseMock {
 		for (int i = 0; i < count; i++) {
 			int id = database.nextOwnerId++;
 			String name = Utilities.getRandomPersonName();
+			String email = Utilities.getRandomEmail(name);
 			List<Accommodation> accommodations = getRandomAccommodations(3, this.accommodations);
-			Owner owner = new Owner(id, name, accommodations);
+			Owner owner = new Owner(id, name, email, accommodations);
 			owners.add(owner);
 		}
 		return owners;
@@ -260,6 +261,7 @@ public class DatabaseMock {
 		Owner newOwner = new Owner(
 				this.nextOwnerId++, 
 				owner.getName(), 
+				owner.getEmail(),
 				owner.getAccommodations()
 				);
 		this.owners.add(newOwner);
@@ -377,7 +379,7 @@ public class DatabaseMock {
 		// No customer with given array.
 		if (customer.getName() == null) {
 			// TODO too harsh?
-			throw new RuntimeException("Cannot add an owner without a name.");
+			throw new RuntimeException("Cannot add a customer without a name.");
 		}
 		Customer newCustomer = new Customer(
 				customerId, 

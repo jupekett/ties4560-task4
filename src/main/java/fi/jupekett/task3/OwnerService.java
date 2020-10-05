@@ -52,10 +52,11 @@ public class OwnerService {
 	/**
 	 * Adds an owner based on a name.
 	 * @param name
+	 * @param email
 	 * @return Owner that was added to the database.
 	 */
-	public Owner addOwner(String name) {
-		Owner newOwner = new Owner(name);
+	public Owner addOwner(String name, String email) {
+		Owner newOwner = new Owner(name, email);
 		Owner addedOwner = database.addOwner(newOwner);
 		return addedOwner;
 	}

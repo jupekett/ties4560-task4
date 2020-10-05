@@ -31,12 +31,12 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
          
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
         
         CredentialService credentialService = new CredentialService();
-        boolean credentialsMatch = credentialService.doCredentialsMatch(username, password, role);
+        boolean credentialsMatch = credentialService.doCredentialsMatch(email, password, role);
 
         if (!credentialsMatch) {
         	// FIXME don't redirect or error? Never leaving the page would be best.

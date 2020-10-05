@@ -15,6 +15,12 @@ public class CredentialStorage {
 	private final static Map<String, Credentials> CREDENTIALS =  new HashMap<>();
 	
 	
+	
+	private CredentialStorage() {
+		// TODO
+	}
+	
+	
 	/**
 	 * Returns the singleton database instance.
 	 * @return
@@ -29,39 +35,39 @@ public class CredentialStorage {
 	
 	/**
 	 * Adds given user information to the storage.
-	 * @param username
+	 * @param email
 	 * @param password
 	 * @param roleStr
-	 * @return true if no existing user with username was found.
+	 * @return true if no existing user with email was found.
 	 */
-	public boolean addCredentials(String username, String password, String roleStr) {
+	public boolean addCredentials(String email, String password, String roleStr) {
 		if (Utilities.someStringsAreNullOrBlank(
-				new String[] {username, password, roleStr})) {
+				new String[] {email, password, roleStr})) {
 			// TODO throw error?
 		}
 		Role role = Role.getRoleFromString(roleStr);
-		Credentials newCredentials= new Credentials(username, password, role);
+		Credentials newCredentials= new Credentials(email, password, role);
 		
 		// put returns null if credentials are not found -> adding was successful.
-		Credentials existingCredentials = CREDENTIALS.put(username, newCredentials);
+		Credentials existingCredentials = CREDENTIALS.put(email, newCredentials);
 		return existingCredentials == null;
 	}
 	
 	
 	/**
 	 * Checks if the given credentials match existing Credentials.
-	 * @param username 
+	 * @param email 
 	 * @param password
 	 * @param role
 	 * @return true if credentials match. Otherwise false.
 	 */
-	public boolean doCredentialsMatch(String username, String password, String roleStr) {
-		if (!CREDENTIALS.containsKey(username)) {
+	public boolean doCredentialsMatch(String email, String password, String roleStr) {
+		if (!CREDENTIALS.containsKey(email)) {
 			return false;
 		}
 		Role role = Role.getRoleFromString(roleStr);
-		Credentials inputCredentials= new Credentials(username, password, role);
-		Credentials savedCredentials = CREDENTIALS.get(username);
+		Credentials inputCredentials= new Credentials(email, password, role);
+		Credentials savedCredentials = CREDENTIALS.get(email);
 		
 		return inputCredentials.equals(savedCredentials);
 	}

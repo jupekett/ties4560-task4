@@ -6,20 +6,20 @@ package fi.jupekett.task3.credentials;
  */
 public class Credentials {
 	
-	private String username;
+	private String email;
 	private String password;
 	private Role role;
 	
 	
-	public Credentials(String username, String password, Role role) {
-		this.username = username;
+	public Credentials(String email, String password, Role role) {
+		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
 	
 	
-	public String getUsername() {
-		return this.username;
+	public String getEmail() {
+		return this.email;
 	}
 	
 	
@@ -51,7 +51,7 @@ public class Credentials {
 		
 		Credentials creds = (Credentials) o;
 		
-		return this.username.equals(creds.username) 
+		return this.email.equals(creds.email) 
 				&& this.password.equals(creds.password)
 				&& this.role.equals(creds.role); 
 	}

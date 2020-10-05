@@ -14,7 +14,7 @@ const initializeListeners = () => {
 	passwordCheckField.addEventListener('blur', handlePasswordBlur);
 }
 
-// TODO checks for username too!
+// TODO checks for email too! Check Näel's regex
 
 /**
  * If password and its repetition don't match, set custom validity.

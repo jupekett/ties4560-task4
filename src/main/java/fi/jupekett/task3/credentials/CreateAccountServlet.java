@@ -23,29 +23,29 @@ public class CreateAccountServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException {
 		response.sendRedirect(request.getContextPath() + "/createAccount");
 	}
-
+	
 	
 	/**
 	 * Handle POSTing form information.
 	 */
 	protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-         
-        String username = request.getParameter("username");
+        
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
-         
+        
         CredentialService credentialService = new CredentialService();
-        boolean creationWasSuccessful = credentialService.addCredentials(username, password, role);
-
+        boolean creationWasSuccessful = credentialService.addCredentials(email, password, role);
+        
         if (creationWasSuccessful) {
         	response.sendRedirect(request.getContextPath() + "/accountCreationSuccessful");
         } else {
         	// FIXME don't redirect or error? Never leaving the page would be best.
-        	// TODO somehow send a message about existing username with the response.
+        	// TODO somehow send a message about existing email with the response.
         	response.sendError(
         			500, 
-        			"User with that username is already in the database!");
+        			"User with that email is already in the database!");
         }
     }
 }

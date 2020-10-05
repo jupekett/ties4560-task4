@@ -13,30 +13,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Owner {
 	private int id;
 	private String name;
+	private String email;
+	
 	private List<Accommodation> accommodations = new ArrayList<>();
 	private List<Link> links = new ArrayList<>();
 		
 	
-	public Owner() {
-		this.id = -1;
-		this.name = "";
-	}
-	
-	
-	public Owner(String name) {
+	public Owner(String name, String email) {
 		this.name = name;
+		this.email = Utilities.getValidEmailOrThrow(email);
 	}
 	
 	
-	public Owner(int id, String name) {
+	public Owner(int id, String name, String email) {
 		this.id = id;
 		this.name = name;
+		this.email = Utilities.getValidEmailOrThrow(email);
 	}
 
 	
-	public Owner(int id, String name, List<Accommodation> accommodations) {
+	public Owner(int id, String name, String email, List<Accommodation> accommodations) {
 		this.id = id;
 		this.name = name;
+		this.email = Utilities.getValidEmailOrThrow(email);
 		this.accommodations = accommodations;
 	}
 	
@@ -105,6 +104,22 @@ public class Owner {
 	 */
 	public void setLinks(List<Link> links) {
 		this.links = links;
+	}
+
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = Utilities.getValidEmailOrThrow(email);
 	}
 
 	
