@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 4674041973892581885L;
-	private static final boolean LOGGING = true;
 	
 	
 	/**
