@@ -7,15 +7,21 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 
+import fi.jupekett.task3.credentials.Role;
+
 /**
  * Root resource (exposed at "owners/{ownerId}/accommodations" path)
  */
 @Path("/owners/{ownerId}/accommodations")
 @Produces(MediaType.APPLICATION_JSON)
 public class AccommodationResource {
+	
 	private AccommodationService accommodationService = new AccommodationService();
 	private String URI_STRING = "http://localhost:8080/task3/webapi/owners/";
-	private static final boolean LOGGING = true;
+	
+	@Context
+	private SecurityContext securityContext;
+	
 	
     /**
      * Get accommodations from an owner
@@ -55,9 +61,17 @@ public class AccommodationResource {
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addAccommodation(@PathParam("ownerId") int ownerId, Accommodation accommodation, @Context UriInfo uriInfo) {
-    	if (LOGGING) System.out.println("AccommodationResource.java - addAccommodation- " + accommodation);
+    public Response addAccommodation(
+    		@PathParam("ownerId") int ownerId, 
+    		Accommodation accommodation, 
+    		@Context UriInfo uriInfo) { 
+    	
+    	// Authorization
+    	if (!securityContext.isUserInRole("owner")) {
+    		throw new WebApplicationException("Not authorized", 401);
+    	}
     	Accommodation newAccommodation = accommodationService.addAccommodation(ownerId, accommodation);
+    	
     	String linkUri = uriInfo.getBaseUriBuilder()
     						.path(AccommodationResource.class)
     						.resolveTemplate("ownerId", ownerId)

@@ -15,7 +15,6 @@ public class CredentialStorage {
 	private final static Map<String, Credentials> CREDENTIALS =  new HashMap<>();
 	
 	
-	
 	private CredentialStorage() {
 		// TODO
 	}
@@ -61,49 +60,7 @@ public class CredentialStorage {
 		return existingCredentials == null;
 	}
 	
-	
-	/**
-	 * Checks if the given credentials match existing Credentials.
-	 * @param email 
-	 * @param password
-	 * @param role
-	 * @return true if credentials match. Otherwise false.
-	 */
-	public boolean doCredentialsMatch(String email, String password, String roleStr) {
-		Role role = Role.getRoleFromString(roleStr);
-		return doCredentialsMatch(email, password, role);
-	}
-	
-	
-	/**
-	 * Checks if the given credentials match existing Credentials.
-	 * @param email 
-	 * @param password
-	 * @param role
-	 * @return true if credentials match. Otherwise false.
-	 */
-	public boolean doCredentialsMatch(String email, String password, Role role) {
-		if (!CREDENTIALS.containsKey(email)) {
-			return false;
-		}
-		Credentials inputCredentials= new Credentials(email, password, role);
-		Credentials savedCredentials = CREDENTIALS.get(email);
-		
-		return inputCredentials.equals(savedCredentials);
-	}
 
 
-	/**
-	 * Returns the role corresponding to an email, or VISITOR if not found.
-	 * @param email
-	 * @return
-	 */
-	public Role getRoleWithEmail(String email) {
-		Credentials credentials = CREDENTIALS.get(email); 
-		if (credentials == null) {
-			return Role.VISITOR;
-		}
-		return credentials.getRole();
-	}
 
 }

@@ -23,6 +23,11 @@ public class DatabaseMock {
 	private int nextCustomerId;
 	private int nextReservationId;
 	
+	private final int COUNT_ACCOMMODATIONS = 10;
+	private final int COUNT_OWNERS = 4;
+	private final int COUNT_RESERVATIONS = 10;
+	private final int COUNT_CUSTOMERS = 4;
+	
 	
 	/**
 	 * Private constructor. 
@@ -30,18 +35,18 @@ public class DatabaseMock {
 	 */
 	private DatabaseMock() {	
 		this.nextAccommodationId = 0;
-		this.accommodations = getInitialAccommodations(10, this);
+		this.accommodations = getInitialAccommodations(COUNT_ACCOMMODATIONS, this);
 
 		// accommodations need to be instantiated first
 		this.nextOwnerId = 0;
-		this.owners = getInitialOwners(4, this);
+		this.owners = getInitialOwners(COUNT_OWNERS, this);
 		
 		this.nextReservationId = 0;
-		this.reservations = getInitialReservations(10, this);
+		this.reservations = getInitialReservations(COUNT_RESERVATIONS, this);
 		
 		// reservations need to be instantiated first (in this random mock)
 		this.nextCustomerId = 0;
-		this.customers = getInitialCustomers(4, this);
+		this.customers = getInitialCustomers(COUNT_CUSTOMERS, this);
 	}
 	
 	
