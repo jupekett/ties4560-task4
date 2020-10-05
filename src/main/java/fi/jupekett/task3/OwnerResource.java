@@ -13,9 +13,12 @@ import javax.ws.rs.core.Response.Status;
 @Path("/owners")
 @Produces(MediaType.APPLICATION_JSON)
 public class OwnerResource {
+	
+	@Context
+	private SecurityContext securityContext;
+	
 	private OwnerService ownerService = new OwnerService();
 	private String URI_STRING = "http://localhost:8080/task3/webapi/owners/";
-	private static final boolean LOGGING = true;
 	
     /**
      * Handle getting all owners. 
@@ -24,6 +27,10 @@ public class OwnerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Owner> getOwners() {
+    	// Authorization
+    	if (!securityContext.isUserInRole("owner")) {
+    		throw new WebApplicationException("Not authorized", 401);
+    	}
     	List<Owner> owners = ownerService.getAllOwners();
         return owners;
     }
@@ -38,6 +45,10 @@ public class OwnerResource {
     @Path("/{ownerId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Owner getOwner(@PathParam("ownerId") int id) {
+    	// Authorization
+    	if (!securityContext.isUserInRole("owner")) {
+    		throw new WebApplicationException("Not authorized", 401);
+    	}
     	Owner owner = ownerService.getOwner(id);
     	if (owner == null) {
     		// TODO what? 
@@ -55,8 +66,10 @@ public class OwnerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addOwner(Owner owner, @Context UriInfo uriInfo) {
-    	if (LOGGING) System.out.println("OwnerResource.java - addOwner - "+owner);
-    	
+    	// Authorization
+    	if (!securityContext.isUserInRole("owner")) {
+    		throw new WebApplicationException("Not authorized", 401);
+    	}
     	Owner newOwner = ownerService.addOwner(owner);
     	String selfUri = uriInfo.getBaseUriBuilder()
     					.path(OwnerResource.class)

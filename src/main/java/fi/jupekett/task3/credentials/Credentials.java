@@ -5,7 +5,7 @@ import java.security.Principal;
 /**
  * Represents the credentials of a user
  */
-public class Credentials implements Principal{
+public class Credentials implements Principal {
 	
 	private String email;
 	private String password;
@@ -52,7 +52,7 @@ public class Credentials implements Principal{
 		
 		Credentials creds = (Credentials) o;
 		
-		return this.email.equals(creds.email) 
+		return this.email.equalsIgnoreCase(creds.email) 
 				&& this.password.equals(creds.password)
 				&& this.role.equals(creds.role); 
 	}

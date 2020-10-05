@@ -7,8 +7,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 
-import fi.jupekett.task3.credentials.Role;
-
 /**
  * Root resource (exposed at "owners/{ownerId}/accommodations" path)
  */
@@ -22,7 +20,7 @@ public class AccommodationResource {
 	@Context
 	private SecurityContext securityContext;
 	
-	
+
     /**
      * Get accommodations from an owner
      *
@@ -31,6 +29,10 @@ public class AccommodationResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Accommodation> getAccommodations(@PathParam("ownerId") int ownerId) {
+    	// Authorization
+    	if (!securityContext.isUserInRole("owner")) {
+    		throw new WebApplicationException("Not authorized", 401);
+    	}
     	List<Accommodation> accommodations = accommodationService.getOwnersAccommodations(ownerId);
         return accommodations;
     }
@@ -49,6 +51,10 @@ public class AccommodationResource {
     		@PathParam("ownerId") int ownerId, 
     		@PathParam("accommodationId") int accommodationId) 
     {
+    	// Authorization
+    	if (!securityContext.isUserInRole("owner")) {
+    		throw new WebApplicationException("Not authorized", 401);
+    	}
     	Accommodation accommodation = accommodationService.getAccommodation(ownerId, accommodationId);
     	return accommodation;
     }
@@ -64,12 +70,13 @@ public class AccommodationResource {
     public Response addAccommodation(
     		@PathParam("ownerId") int ownerId, 
     		Accommodation accommodation, 
-    		@Context UriInfo uriInfo) { 
+    		@Context UriInfo uriInfo) {
     	
     	// Authorization
     	if (!securityContext.isUserInRole("owner")) {
     		throw new WebApplicationException("Not authorized", 401);
     	}
+
     	Accommodation newAccommodation = accommodationService.addAccommodation(ownerId, accommodation);
     	
     	String linkUri = uriInfo.getBaseUriBuilder()

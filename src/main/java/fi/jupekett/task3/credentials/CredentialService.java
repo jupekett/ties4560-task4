@@ -89,4 +89,14 @@ public class CredentialService {
 	}
 
 
+	/**
+	 * Returns credentials based on email.
+	 * @param email
+	 * @return
+	 */
+	public Credentials getCredentials(String email) {
+		return CREDENTIALS.get(email);
+	}
+
+
 }

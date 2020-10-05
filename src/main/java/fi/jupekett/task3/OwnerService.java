@@ -46,7 +46,7 @@ public class OwnerService {
 	 */
 	public Owner getOwnerByEmail(String email) {
 		for (Owner owner : OWNERS) {
-			if (owner.getEmail().equals(email)) {
+			if (owner.getEmail().equalsIgnoreCase(email)) {
 				return owner;
 			}
 		}
