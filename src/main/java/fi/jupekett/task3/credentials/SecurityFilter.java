@@ -46,7 +46,8 @@ public class SecurityFilter implements ContainerRequestFilter {
 		}
 		
 		if ((requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX))
-				&& (requestContext.getMethod().equals("GET"))) {
+				&& ((requestContext.getMethod().equals("GET"))
+						|| requestContext.getMethod().equals("POST"))) {
 			if (credentials != null) return;
 			
 			ErrorMessage errorMessage = new ErrorMessage("You are not authorized.", 401, "FIXME"); //FIX documentation url
