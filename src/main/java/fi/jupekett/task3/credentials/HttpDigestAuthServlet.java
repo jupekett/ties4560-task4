@@ -116,7 +116,7 @@ public class HttpDigestAuthServlet extends HttpServlet {
                     if (StringUtils.isBlank(qop)) {
                         serverResponse = DigestUtils.md5Hex(ha1 + ":" + nonce + ":" + ha2);
                     } else {
-                        String domain = headerValues.get("realm");
+                        //String domain = headerValues.get("realm");
                         String nonceCount = headerValues.get("nc");
                         String clientNonce = headerValues.get("cnonce");
 

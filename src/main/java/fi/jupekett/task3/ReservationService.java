@@ -33,7 +33,7 @@ public class ReservationService {
 		List<Customer> customers = customerService.getAllCustomers();
 		for (Customer customer : customers) {
 			if (customer.getId() == customerId) {
-				var reservations = customer.getReservations();
+				List<Reservation> reservations = customer.getReservations();
 				if (reservations == null || reservations.size() == 0) {
 					throw new DataNotFoundException("Customer with ID "+customerId+" has no reservations.");
 				}
@@ -57,7 +57,7 @@ public class ReservationService {
 		if (reservations.size() == 0) {
 			throw new DataNotFoundException("Customer with ID "+customerId+" has no reservations.");
 		}
-		for (var reservation : reservations) {
+		for (Reservation reservation : reservations) {
 			if (reservation.getId() == reservationId) {
 				return reservation;
 			}

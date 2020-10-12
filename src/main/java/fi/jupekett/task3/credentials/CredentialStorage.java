@@ -50,7 +50,7 @@ public class CredentialStorage {
 	public boolean addCredentials(String email, String password, String roleStr) {
 		if (Utilities.someStringsAreNullOrBlank(
 				new String[] {email, password, roleStr})) {
-			// TODO throw error?
+			// TODO throw error? 
 		}
 		Role role = Role.getRoleFromString(roleStr);
 		Credentials newCredentials= new Credentials(email, password, role);

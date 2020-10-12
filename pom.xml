@@ -18,7 +18,9 @@
                 <version>3.8.1</version>
                 <inherited>true</inherited>
                 <configuration>
-                    <release>13</release>
+                	<source>1.8</source>
+                	<target>1.8</target>
+                    <!-- <release>13</release>  -->
                 </configuration>
             </plugin>
         </plugins>

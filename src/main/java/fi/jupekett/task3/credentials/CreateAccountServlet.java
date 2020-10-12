@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class CreateAccountServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = -7487550108402617633L;
-	private static final boolean LOGGING = true;
 	
 	
 	/**

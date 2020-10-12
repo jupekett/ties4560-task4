@@ -119,7 +119,7 @@ public class Utilities {
 	public static boolean someStringsAreNullOrBlank(String[] array) {
 		for (String str : array) {
 			if (str == null) return true;
-			if (str.isBlank()) return true;
+			if (str.trim().isEmpty()) return true;
 		}
 		return false;
 	}
