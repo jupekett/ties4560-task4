@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
  * A servlet to handle Digest Access authentication.
  * @author lrobb (https://gist.github.com/lrobb/3745208)
  */
-@WebServlet("/httpDigestAuthServlet")
 public class HttpDigestAuthServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = -11586024119337866L;

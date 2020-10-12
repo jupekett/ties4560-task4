@@ -35,6 +35,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 		if (authHeader != null && authHeader.size() > 0) {
 			String authToken = authHeader.get(0);
 			
+			// FIXME redirect doesn't work from inside a requestFilter
 			// Digest Access is in use -> redirect to correct servlet
 			if (authToken.startsWith("Digest")) {
 				UriInfo uriInfo = requestContext.getUriInfo();
