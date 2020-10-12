@@ -11,9 +11,11 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class DataNotFoundExceptionMapper implements ExceptionMapper<DataNotFoundException> {
 	
+	private static final String DOC_URL = Utilities.getDocumentationUrl();
+	
 	@Override
 	public Response toResponse(DataNotFoundException ex) {
-		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 404, "http://localhost:8080/task3/documentation");
+		ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), 404, DOC_URL);
 		return Response.status(Status.NOT_FOUND)
 						.entity(errorMessage)
 						.build();

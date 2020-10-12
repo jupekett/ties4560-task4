@@ -157,6 +157,15 @@ public class Utilities {
 		return email;
 		
 	}
+
+	
+	/**
+	 * Returns the documentation url from thin air, if possible.
+	 * @return
+	 */
+	public static String getDocumentationUrl() {
+		return "http://localhost:8080/task3/documentation"; // FIXME
+	}
 	
 	
 	
