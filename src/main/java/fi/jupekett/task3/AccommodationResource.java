@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import javax.ws.rs.core.Response.Status;
 
 /**
  * Root resource (exposed at "owners/{ownerId}/accommodations" path)
@@ -15,7 +14,6 @@ import javax.ws.rs.core.Response.Status;
 public class AccommodationResource {
 	
 	private AccommodationService accommodationService = new AccommodationService();
-	private String URI_STRING = "http://localhost:8080/task3/webapi/owners/";
 	
 	@Context
 	private SecurityContext securityContext;

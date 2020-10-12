@@ -1,18 +1,13 @@
 package fi.jupekett.task3.credentials;
 
 import fi.jupekett.task3.ErrorMessage;
-import fi.jupekett.task3.Owner;
-import fi.jupekett.task3.OwnerService;
-
 import java.io.IOException;
-import java.net.URI;
 import java.util.Base64;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
@@ -37,19 +32,20 @@ public class SecurityFilter implements ContainerRequestFilter {
 			
 			// FIXME redirect doesn't work from inside a requestFilter
 			// Digest Access is in use -> redirect to correct servlet
-			if (authToken.startsWith("Digest")) {
-				UriInfo uriInfo = requestContext.getUriInfo();
-				URI uri = uriInfo.getBaseUriBuilder()
-								 .path(HttpDigestAuthServlet.class)
-								 .build();
-		    	Response digestAuthResponse = Response.status(305) // "use proxy"
-		    										  .location(uri)
-		    										  .build();
-				requestContext.abortWith(digestAuthResponse);
-				//requestContext.setRequestUri(uri);
-				return;
-				
-			} else if (authToken.startsWith("Basic")) {
+//			if (authToken.startsWith("Digest")) {
+//				UriInfo uriInfo = requestContext.getUriInfo();
+//				URI uri = uriInfo.getBaseUriBuilder()
+//								 .path(HttpDigestAuthServlet.class)
+//								 .build();
+//		    	Response digestAuthResponse = Response.status(305) // "use proxy"
+//		    										  .location(uri)
+//		    										  .build();
+//				requestContext.abortWith(digestAuthResponse);
+//				//requestContext.setRequestUri(uri);
+//				return;
+//				
+//			} else 
+				if (authToken.startsWith("Basic")) {
 				authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
 				String decodedString = new String(Base64.getDecoder().decode(authToken));
 				StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
@@ -70,7 +66,9 @@ public class SecurityFilter implements ContainerRequestFilter {
 						|| requestContext.getMethod().equals("POST"))) {
 			if (credentials != null) return;
 			
-			ErrorMessage errorMessage = new ErrorMessage("You are not authorized.", 401, "FIXME"); //FIX documentation url
+			UriInfo uriInfo = requestContext.getUriInfo();
+			String docUri = uriInfo.getBaseUri().toString() + "documentation"; 
+			ErrorMessage errorMessage = new ErrorMessage("You are not authorized.", 401, docUri);
 			
 			Response unauthorizedStatus = Response.status(Response.Status.UNAUTHORIZED)
 					.entity(errorMessage)
@@ -78,4 +76,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 			requestContext.abortWith(unauthorizedStatus);
 		}
 	}
+	
+	
+	
 }

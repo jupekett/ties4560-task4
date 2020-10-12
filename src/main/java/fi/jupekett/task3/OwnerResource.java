@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import javax.ws.rs.core.Response.Status;
 
 /**
  * Root resource (exposed at "owners" path)
@@ -18,7 +17,6 @@ public class OwnerResource {
 	private SecurityContext securityContext;
 	
 	private OwnerService ownerService = new OwnerService();
-	private String URI_STRING = "http://localhost:8080/task3/webapi/owners/";
 	
     /**
      * Handle getting all owners. 
@@ -52,7 +50,6 @@ public class OwnerResource {
     	Owner owner = ownerService.getOwner(id);
     	if (owner == null) {
     		// TODO what? 
-    		//return APIHelpers.getErrorJson(404, "No owner with ID " + id);
     	}
     	return owner;
     }

@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * A servlet to handle Digest Access authentication.
+ * FIXME has no place in the system now, as Digest
+ * Access isn't implemented in the system.
  * @author lrobb (https://gist.github.com/lrobb/3745208)
  */
 public class HttpDigestAuthServlet extends HttpServlet {

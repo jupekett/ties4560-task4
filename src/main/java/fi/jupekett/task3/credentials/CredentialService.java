@@ -1,6 +1,5 @@
 package fi.jupekett.task3.credentials;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
