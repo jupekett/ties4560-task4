@@ -20,6 +20,38 @@
 	<p>webapi/customers/{customerId}/reservations</p>
 	<p>webapi/customers/{customerId}/reservations/{reservationId}</p>
 	
+	<h2>Structure of data</h2>
+	<p>The data is served as JSON with following structure:
+	<br />
+	<p>owner</p>
+	<ul>
+		<li>id: number</li>
+		<li>name: string</li>
+		<li>email: string</li>
+		<li>links: array of strings</li>
+		<li>accomodations: array of accommodations</li>
+	</ul>
+	<p>accommodation</p>
+	<ul>
+		<li>id: number</li>
+		<li>name: string</li>
+		<li>links: array of strings</li>
+	</ul>
+	<p>customer</p>
+	<ul>
+		<li>id: number</li>
+		<li>name: string</li>
+		<li>email: string</li>
+		<li>links: array of strings</li>
+		<li>reservations: array of reservations</li>
+	</ul>
+	<p>reservation</p>
+	<ul>
+		<li>id: number</li>
+		<li>accommodationId: number</li>
+		<li>links: array of strings</li>
+	</ul>
+	
 	<h2>Available operations</h2>
 	<p>Owners</p>
 	<ul>
@@ -44,9 +76,79 @@
 		<li>DELETE</li>
 	</ul>
 	
-	<h2>401 restricted?</h2>
-	<p>Owner and accommodation resources are restricted. Basic authentication with owner account credentials is needed to operate with them.</p>
-	<p><a href="../createAccount">Click here to move to the account creation page.</a></p>
+	
+	<h2>Exceptions</h2>
+	<p>All handled exceptions must have the following structure:</p>
+	<ul>
+		<li>documentation: string</li>
+		<li>errorCode: number</li>
+		<li>errorMessage: string</li>
+	</ul>
+	<p>Documentation field holds a link to the documentation page.</p>
+	
+	<h3>401 restricted</h3>
+	<p>Owner and accommodation resources are restricted. Basic authentication 
+	with owner account credentials is needed to operate with them.</p>
+	<p><a href="../createAccount">Link to account creation page.</a></p>
+	
+	<h3>404 not found</h3>
+	<p>Used when a well-formed request asks for a resource that doesn't exist.</p>
+	
+	<h3>500 internal server error</h3>
+	<p>Provided by Tomcat when the application doesn't manage to handle an 
+	exception in a more graceful way. These are hopefully minimal in numbers.</p>
+	
+	<h2>Requirements</h2>
+	<p>This software was developed during the course <em>TIES4560 SOA and 
+	Cloud Computing</em> at University of Jyväskylä. Two sets of requirements
+	were laid out for the software:</p>
+	
+	<h3>Requirements from Task-3</h3>
+	<ul>
+		<li>At least 2 upper level resources.</li>
+		<li>At least 2 nested resources.</li>
+		<li>GET, POST, PUT and DELETE HTTP-methods should be used.</li>
+		<li>Use mainly JSON format for content.</li>
+		<li>Variables in the path.</li>
+		<li>Support query parameters in a request. <strong>(not implemented)</strong></li>
+		<li>Use HTTP status codes in the responses.</li>
+		<li>Use own exception handler.</li>
+		<li>Implement HATEOAS. <strong>(partially implemented)</strong></li>
+	</ul>
+	
+	<h3>Requirements from Task-4</h3>
+	<ul>
+		<li>Implement a user registration mechanism and store user profile with corresponding credentials.</li>
+		<li>Support Basic authentication.</li>
+		<li>Provide mechanism of role-based access control to the resources.</li>
+		<li>Support one extra form of authentication: <strong>(not implemented)</strong></li>
+		<li>
+			<ul>
+				<li>Digest access authentication.</li>
+				<li>JSON Web tokens</li>
+				<li>OAuth</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<h3>Self-posed requirements for implementation</h3>
+	<ul>
+		<li>
+			Database must keep track of ID numbers for each resource, and 
+			increment them by 1 for each successful POST operation for said resource.
+		</li>
+		<li>
+			User-provided ID's must be discarded, and replaced by 
+			database-handled incrementing numbers.
+		</li>
+		<li>
+			When POSTing, <em>name</em> is required for all resources except for 
+			reservations, where the required field is <em>accommodationId</em>.
+		<li>
+			Customer PUT operation can only be used to modify the email field, 
+			and all other information is to be discarded.
+		</li>
+	</ul>
 	
 </body>
 </html>
